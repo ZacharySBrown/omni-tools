@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.claude/settings.local.json
+.claude/sessions/
+/tmp/
+*.log
