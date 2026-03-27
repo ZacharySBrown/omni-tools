@@ -1,0 +1,211 @@
+# Diagram Review Checks
+# Each check defines what to look for when reviewing a rendered OmniGraffle diagram.
+# Checks run against the readback snapshot (geometry, text, styles) from evaluateJavascript.
+#
+# Severity levels:
+#   error   — Must fix before diagram is usable
+#   warning — Degrades quality, should fix
+#   info    — Suggestion for polish
+#
+# Check types:
+#   automated — Runs programmatically against readback data
+#   prompt    — Generates a review prompt for Claude to evaluate visually
+
+checks:
+
+  # ── Text Visibility ──────────────────────────────────────────────
+
+  - id: text_overflow
+    name: Text overflow / wrapping
+    description: >
+      Detect text that doesn't fit within its containing shape, causing
+      unwanted line wrapping or clipping. The most common issue we hit
+      during calibration.
+    type: automated
+    severity: error
+    params:
+      char_width_factor: 0.6    # estimated char width = font_size * this
+      h_padding: 32             # total horizontal padding (both sides)
+    prompt: |
+      Check each shape's text against its width. For a shape with text "{text}",
+      font size {textSize}px, and width {width}px: estimate if the text fits on
+      one line. Flag any shape where estimated text width exceeds shape width.
+      Pay special attention to:
+      - Unicode subscript/superscript characters (₁₂₃) in narrow boxes
+      - Multi-word labels that might wrap
+      - Annotation labels (transparent boxes used for floating text)
+
+  - id: text_too_small
+    name: Text too small for container
+    description: >
+      Text that is much smaller than its container leaves too much empty
+      space and looks unpolished.
+    type: automated
+    severity: warning
+    params:
+      min_fill_ratio: 0.3       # text width should be >= 30% of box width
+      ignore_empty: true        # skip shapes with no text
+    prompt: |
+      For each shape with text, check if the text fills at least {min_fill_ratio}
+      of the box width. Shapes with excessive empty space should have their
+      font_size bumped up. Exception: container/border shapes intentionally
+      have no text.
+
+  - id: text_contrast
+    name: Low contrast text
+    description: >
+      Text color too similar to fill color makes labels unreadable.
+    type: automated
+    severity: error
+    params:
+      min_luminance_diff: 0.3   # minimum difference in relative luminance
+    prompt: |
+      Compare each shape's textColor to its fillColor. Compute relative
+      luminance difference. Flag any shape where the contrast ratio is below
+      the threshold, making text hard to read.
+
+  # ── Layout & Overlap ─────────────────────────────────────────────
+
+  - id: shape_overlap
+    name: Shape overlap detection
+    description: >
+      Two shapes whose bounding boxes overlap may hide content behind
+      each other. Exception: container/border shapes intentionally
+      overlap their children.
+    type: automated
+    severity: warning
+    params:
+      ignore_containers: true   # skip shapes with opacity < 0.5 (borders)
+      min_overlap_px: 5         # ignore overlaps smaller than this
+    prompt: |
+      Check all pairs of shapes for bounding box intersection. Ignore
+      shapes that are intentional containers (low opacity / large area
+      enclosing others). Flag pairs where non-container shapes overlap
+      by more than {min_overlap_px} pixels.
+
+  - id: inconsistent_sizing
+    name: Inconsistent element sizing
+    description: >
+      Elements at the same organizational scope should have identical
+      dimensions. Detect groups of shapes with similar names but
+      different width/height.
+    type: automated
+    severity: warning
+    params:
+      group_by_prefix: true     # group shapes by name prefix (e.g., enc_1..enc_6)
+      tolerance_px: 2           # allow tiny rounding differences
+    prompt: |
+      Group shapes by name prefix (everything before the last _ and number).
+      Within each group, check that all shapes have identical width and height
+      (within {tolerance_px}px tolerance). Flag any group with inconsistent
+      dimensions.
+
+  - id: inconsistent_font_size
+    name: Inconsistent font sizes within scope
+    description: >
+      Same-scope elements (e.g., all vector labels, all encoder boxes)
+      should use the same font size.
+    type: automated
+    severity: warning
+    params:
+      group_by_prefix: true
+    prompt: |
+      Group shapes by name prefix. Within each group, check that all shapes
+      use the same textSize. Flag any group where font sizes differ, as this
+      violates the "same scope = same size" rule.
+
+  # ── Connection Quality ───────────────────────────────────────────
+
+  - id: diagonal_straight_lines
+    name: Diagonal lines marked as straight
+    description: >
+      Connections using LineType.Straight where source and destination
+      centers aren't aligned will render as ugly diagonal lines instead
+      of clean vertical/horizontal arrows.
+    type: automated
+    severity: warning
+    params:
+      alignment_threshold_px: 15  # max offset to consider "aligned"
+    prompt: |
+      For each line with lineType=Straight, check if the source and
+      destination shapes are vertically or horizontally aligned (center
+      offset < {alignment_threshold_px}px in at least one axis). Flag
+      lines where both axes are offset, producing a diagonal.
+
+  - id: arrow_direction
+    name: Arrow direction check
+    description: >
+      Verify that arrows point in the expected data flow direction.
+      In bottom-to-top diagrams, arrows should generally point upward.
+      In left-to-right diagrams, arrows should point rightward.
+    type: prompt
+    severity: info
+    prompt: |
+      Review the connection directions in this diagram. The typical data
+      flow is bottom-to-top (inputs at bottom, outputs at top) or
+      left-to-right. Flag any arrows that point against the primary
+      data flow direction, as they may indicate a from/to reversal.
+      Exception: residual/skip connections intentionally flow backwards.
+
+  # ── Style Consistency ────────────────────────────────────────────
+
+  - id: thin_strokes
+    name: Stroke too thin
+    description: >
+      Shapes with very thin strokes (< 1px) look faint and unprofessional.
+    type: automated
+    severity: info
+    params:
+      min_stroke_px: 1.0
+    prompt: |
+      Check each shape's strokeThickness. Flag any shape with stroke
+      below {min_stroke_px}px, excluding shapes with intentionally
+      hidden strokes (opacity=0 annotations).
+
+  - id: missing_magnets_wide
+    name: Wide shapes without custom magnets
+    description: >
+      Wide shapes (width > 2x height) with multiple connections but
+      only default magnets will have all connections converge at center
+      points, creating a messy fan.
+    type: automated
+    severity: warning
+    params:
+      width_height_ratio: 2.0   # shapes wider than this ratio
+      min_connections: 3         # with at least this many connections
+    prompt: |
+      Identify shapes where width > {width_height_ratio} * height. If such
+      a shape has {min_connections}+ connections, check whether it has custom
+      magnets defined. Flag wide shapes with many connections but only 4
+      default magnets.
+
+  # ── Visual Review (prompt-only) ──────────────────────────────────
+
+  - id: overall_balance
+    name: Overall layout balance
+    description: >
+      Holistic check for visual balance, whitespace distribution, and
+      alignment of the diagram as a whole.
+    type: prompt
+    severity: info
+    prompt: |
+      Review the overall layout of this diagram for:
+      1. Is content roughly centered on the canvas with even margins?
+      2. Are there large empty gaps between elements that break visual flow?
+      3. Do aligned elements (stacks, grids) maintain consistent spacing?
+      4. Does the diagram read naturally in the intended flow direction?
+      Provide specific suggestions for any imbalances found.
+
+  - id: color_semantics
+    name: Color role consistency
+    description: >
+      Verify that colors are used consistently for semantic roles
+      (e.g., all encoder shapes use the same blue, all attention shapes
+      use the same warm tone).
+    type: prompt
+    severity: info
+    prompt: |
+      Review the fillColor of each shape against its semantic role. Shapes
+      representing the same concept should use the same color. Flag any
+      shapes that break the color coding pattern established by the preset's
+      semantic_roles mapping.

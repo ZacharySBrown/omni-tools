@@ -25,3 +25,10 @@ export {
   type ExtractStyleInput,
 } from "./diagram.js";
 export type { BridgeResult } from "./bridge.js";
+export {
+  ReviewSeverity,
+  ReviewFinding,
+  ReviewResult,
+  ReviewDiagramInputSchema,
+  type ReviewDiagramInput,
+} from "./review.js";

@@ -7,12 +7,14 @@ import {
   AddElementInputSchema,
   ExtractStyleInputSchema,
 } from "../types/diagram.js";
+import { ReviewDiagramInputSchema } from "../types/review.js";
 import { createDiagramTool } from "./create-diagram.js";
 import { exportDiagramTool } from "./export-diagram.js";
 import { listStylePresetsTool } from "./list-style-presets.js";
 import { applyStylePresetTool } from "./apply-style-preset.js";
 import { addElementTool } from "./add-element.js";
 import { extractStyleTool } from "./extract-style.js";
+import { reviewDiagramTool } from "./review-diagram.js";
 
 export function registerAllTools(server: McpServer): void {
   server.tool(
@@ -55,5 +57,12 @@ export function registerAllTools(server: McpServer): void {
     extractStyleTool.description,
     ExtractStyleInputSchema.shape,
     async (params) => extractStyleTool.execute(params),
+  );
+
+  server.tool(
+    reviewDiagramTool.name,
+    reviewDiagramTool.description,
+    ReviewDiagramInputSchema.shape,
+    async (params) => reviewDiagramTool.execute(params as unknown as Record<string, unknown>),
   );
 }
