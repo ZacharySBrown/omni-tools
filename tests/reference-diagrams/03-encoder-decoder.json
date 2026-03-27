@@ -1,162 +1,72 @@
 {
-  "title": "Transformer Encoder-Decoder Architecture",
-  "description": "Full encoder-decoder from Jay Alammar's Illustrated Transformer: 6 stacked encoders (left), 6 stacked decoders (right), with cross-attention connections.",
+  "title": "Transformer Encoder-Decoder Stack",
+  "description": "Full encoder-decoder architecture from Jay Alammar's Illustrated Transformer: 6 stacked encoders, 6 stacked decoders, cross-attention fan-out, input/output tokens.",
   "style_preset": "illustrated-technical",
   "canvas_type": "diagram",
   "layout": "manual",
   "nodes": [
     {
-      "id": "input_embed",
-      "label": "Input\nEmbedding",
-      "role": "input",
+      "id": "enc_border",
+      "label": "",
+      "role": "embedding",
       "shape": "rounded_rectangle",
-      "x": 300, "y": 1060,
-      "width": 200, "height": 56
+      "stroke_color": "#9DD6B5",
+      "x": 60, "y": 70,
+      "width": 220, "height": 310,
+      "opacity": 0.2
     },
     {
-      "id": "enc_1",
-      "label": "Encoder #1",
-      "role": "encoder",
-      "shape": "rounded_rectangle",
-      "x": 300, "y": 920,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "enc_2",
-      "label": "Encoder #2",
-      "role": "encoder",
-      "shape": "rounded_rectangle",
-      "x": 300, "y": 800,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "enc_3",
-      "label": "Encoder #3",
-      "role": "encoder",
-      "shape": "rounded_rectangle",
-      "x": 300, "y": 680,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "enc_4",
-      "label": "Encoder #4",
-      "role": "encoder",
-      "shape": "rounded_rectangle",
-      "x": 300, "y": 560,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "enc_5",
-      "label": "Encoder #5",
-      "role": "encoder",
-      "shape": "rounded_rectangle",
-      "x": 300, "y": 440,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "enc_6",
-      "label": "Encoder #6",
-      "role": "encoder",
-      "shape": "rounded_rectangle",
-      "x": 300, "y": 320,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "output_embed",
-      "label": "Output\nEmbedding",
-      "role": "input",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 1060,
-      "width": 200, "height": 56
-    },
-    {
-      "id": "dec_1",
-      "label": "Decoder #1",
+      "id": "dec_border",
+      "label": "",
       "role": "decoder",
       "shape": "rounded_rectangle",
-      "x": 1000, "y": 920,
-      "width": 200, "height": 72
+      "stroke_color": "#E8A0B0",
+      "x": 420, "y": 70,
+      "width": 220, "height": 310,
+      "opacity": 0.15
     },
-    {
-      "id": "dec_2",
-      "label": "Decoder #2",
-      "role": "decoder",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 800,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "dec_3",
-      "label": "Decoder #3",
-      "role": "decoder",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 680,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "dec_4",
-      "label": "Decoder #4",
-      "role": "decoder",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 560,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "dec_5",
-      "label": "Decoder #5",
-      "role": "decoder",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 440,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "dec_6",
-      "label": "Decoder #6",
-      "role": "decoder",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 320,
-      "width": 200, "height": 72
-    },
-    {
-      "id": "linear",
-      "label": "Linear",
-      "role": "output",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 200,
-      "width": 200, "height": 52
-    },
-    {
-      "id": "softmax",
-      "label": "Softmax",
-      "role": "output",
-      "shape": "rounded_rectangle",
-      "x": 1000, "y": 110,
-      "width": 200, "height": 52
-    }
+
+    {"id": "enc_6", "label": "ENCODER", "role": "encoder", "shape": "rounded_rectangle", "x": 90, "y": 85, "width": 160, "height": 38, "font_size": 13, "magnets": [{"x": 0, "y": -0.5}, {"x": 0, "y": 0.5}, {"x": -0.5, "y": 0}, {"x": 0.5, "y": 0}]},
+    {"id": "enc_5", "label": "ENCODER", "role": "encoder", "shape": "rounded_rectangle", "x": 90, "y": 131, "width": 160, "height": 38, "font_size": 13},
+    {"id": "enc_4", "label": "ENCODER", "role": "encoder", "shape": "rounded_rectangle", "x": 90, "y": 177, "width": 160, "height": 38, "font_size": 13},
+    {"id": "enc_3", "label": "ENCODER", "role": "encoder", "shape": "rounded_rectangle", "x": 90, "y": 223, "width": 160, "height": 38, "font_size": 13},
+    {"id": "enc_2", "label": "ENCODER", "role": "encoder", "shape": "rounded_rectangle", "x": 90, "y": 269, "width": 160, "height": 38, "font_size": 13},
+    {"id": "enc_1", "label": "ENCODER", "role": "encoder", "shape": "rounded_rectangle", "x": 90, "y": 315, "width": 160, "height": 38, "font_size": 13},
+
+    {"id": "dec_6", "label": "DECODER", "role": "decoder", "shape": "rounded_rectangle", "x": 450, "y": 85, "width": 160, "height": 38, "font_size": 13},
+    {"id": "dec_5", "label": "DECODER", "role": "decoder", "shape": "rounded_rectangle", "x": 450, "y": 131, "width": 160, "height": 38, "font_size": 13},
+    {"id": "dec_4", "label": "DECODER", "role": "decoder", "shape": "rounded_rectangle", "x": 450, "y": 177, "width": 160, "height": 38, "font_size": 13},
+    {"id": "dec_3", "label": "DECODER", "role": "decoder", "shape": "rounded_rectangle", "x": 450, "y": 223, "width": 160, "height": 38, "font_size": 13},
+    {"id": "dec_2", "label": "DECODER", "role": "decoder", "shape": "rounded_rectangle", "x": 450, "y": 269, "width": 160, "height": 38, "font_size": 13},
+    {"id": "dec_1", "label": "DECODER", "role": "decoder", "shape": "rounded_rectangle", "x": 450, "y": 315, "width": 160, "height": 38, "font_size": 13},
+
+    {"id": "lbl_input", "label": "INPUT", "role": "neutral", "shape": "annotation", "x": 50, "y": 400, "width": 80, "height": 24, "font_size": 11, "opacity": 0},
+    {"id": "tok_input", "label": "je    suis    \u00e9tudiant", "role": "embedding", "shape": "rounded_rectangle", "color_override": "#C6F6D5", "stroke_color": "#9AE6B4", "x": 112, "y": 398, "width": 155, "height": 24, "font_size": 11},
+
+    {"id": "lbl_output", "label": "OUTPUT", "role": "neutral", "shape": "annotation", "x": 420, "y": 42, "width": 85, "height": 24, "font_size": 11, "opacity": 0},
+    {"id": "tok_output", "label": "I    am    a    student", "role": "decoder", "shape": "rounded_rectangle", "color_override": "#FED7E2", "stroke_color": "#FBB6CE", "x": 495, "y": 40, "width": 160, "height": 24, "font_size": 11}
   ],
   "connections": [
-    { "from": "input_embed", "to": "enc_1" },
-    { "from": "enc_1", "to": "enc_2" },
-    { "from": "enc_2", "to": "enc_3" },
-    { "from": "enc_3", "to": "enc_4" },
-    { "from": "enc_4", "to": "enc_5" },
-    { "from": "enc_5", "to": "enc_6" },
+    { "from": "enc_1", "to": "enc_2", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "enc_2", "to": "enc_3", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "enc_3", "to": "enc_4", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "enc_4", "to": "enc_5", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "enc_5", "to": "enc_6", "color_override": "#4A5568", "line_type": "straight" },
 
-    { "from": "output_embed", "to": "dec_1" },
-    { "from": "dec_1", "to": "dec_2" },
-    { "from": "dec_2", "to": "dec_3" },
-    { "from": "dec_3", "to": "dec_4" },
-    { "from": "dec_4", "to": "dec_5" },
-    { "from": "dec_5", "to": "dec_6" },
+    { "from": "dec_1", "to": "dec_2", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "dec_2", "to": "dec_3", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "dec_3", "to": "dec_4", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "dec_4", "to": "dec_5", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "dec_5", "to": "dec_6", "color_override": "#4A5568", "line_type": "straight" },
 
-    { "from": "dec_6", "to": "linear" },
-    { "from": "linear", "to": "softmax" },
+    { "from": "enc_6", "to": "dec_1", "color_override": "#68D391", "tail_magnet": 4, "head_magnet": 3, "line_type": "straight" },
+    { "from": "enc_6", "to": "dec_2", "color_override": "#68D391", "tail_magnet": 4, "head_magnet": 3, "line_type": "straight" },
+    { "from": "enc_6", "to": "dec_3", "color_override": "#68D391", "tail_magnet": 4, "head_magnet": 3, "line_type": "straight" },
+    { "from": "enc_6", "to": "dec_4", "color_override": "#68D391", "tail_magnet": 4, "head_magnet": 3, "line_type": "straight" },
+    { "from": "enc_6", "to": "dec_5", "color_override": "#68D391", "tail_magnet": 4, "head_magnet": 3, "line_type": "straight" },
+    { "from": "enc_6", "to": "dec_6", "color_override": "#68D391", "tail_magnet": 4, "head_magnet": 3, "line_type": "straight" },
 
-    { "from": "enc_6", "to": "dec_1", "label": "K, V", "style": "highlight" },
-    { "from": "enc_6", "to": "dec_2", "label": "K, V", "style": "highlight" },
-    { "from": "enc_6", "to": "dec_3", "label": "K, V", "style": "highlight" },
-    { "from": "enc_6", "to": "dec_4", "label": "K, V", "style": "highlight" },
-    { "from": "enc_6", "to": "dec_5", "label": "K, V", "style": "highlight" },
-    { "from": "enc_6", "to": "dec_6", "label": "K, V", "style": "highlight" }
+    { "from": "tok_input", "to": "enc_1", "color_override": "#4A5568", "line_type": "straight" },
+    { "from": "dec_6", "to": "tok_output", "color_override": "#4A5568", "line_type": "straight" }
   ]
 }

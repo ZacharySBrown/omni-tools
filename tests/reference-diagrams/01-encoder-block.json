@@ -1,84 +1,301 @@
 {
   "title": "Transformer Encoder Block",
-  "description": "Single encoder block from Jay Alammar's Illustrated Transformer: self-attention + feed-forward with residual connections and layer norm. Vertical bottom-to-top flow.",
+  "description": "Encoder block from Jay Alammar's Illustrated Transformer: Self-Attention and Feed Forward with input/output tensor vectors, ENCODER border. Wide horizontal layout, bottom-to-top flow.",
   "style_preset": "illustrated-technical",
   "canvas_type": "diagram",
   "layout": "manual",
   "nodes": [
     {
-      "id": "input",
-      "label": "Input Embedding",
-      "role": "input",
-      "shape": "rounded_rectangle",
-      "x": 640, "y": 1020,
-      "width": 320, "height": 56
+      "id": "encoder_label",
+      "label": "ENCODER",
+      "role": "embedding",
+      "shape": "annotation",
+      "color_override": "#38A169",
+      "x": 78,
+      "y": 24,
+      "width": 160,
+      "height": 34,
+      "font_size": 20,
+      "opacity": 0
     },
     {
-      "id": "self_attn",
-      "label": "Self-Attention",
-      "role": "attention",
+      "id": "encoder_border",
+      "label": "",
+      "role": "embedding",
       "shape": "rounded_rectangle",
-      "x": 640, "y": 840,
-      "width": 320, "height": 72
-    },
-    {
-      "id": "add_norm_1",
-      "label": "Add & Norm",
-      "role": "intermediate",
-      "shape": "rounded_rectangle",
-      "x": 640, "y": 720,
-      "width": 320, "height": 48
+      "stroke_color": "#9DD6B5",
+      "x": 80,
+      "y": 60,
+      "width": 1040,
+      "height": 480,
+      "font_size": 16,
+      "opacity": 0.25
     },
     {
       "id": "ffn",
       "label": "Feed Forward",
       "role": "encoder",
       "shape": "rounded_rectangle",
-      "x": 640, "y": 580,
-      "width": 320, "height": 72
+      "stroke_color": "#8BADD4",
+      "x": 140,
+      "y": 100,
+      "width": 920,
+      "height": 130,
+      "magnets": [
+        {
+          "x": -0.25,
+          "y": -0.5
+        },
+        {
+          "x": 0,
+          "y": -0.5
+        },
+        {
+          "x": 0.25,
+          "y": -0.5
+        },
+        {
+          "x": -0.25,
+          "y": 0.5
+        },
+        {
+          "x": 0,
+          "y": 0.5
+        },
+        {
+          "x": 0.25,
+          "y": 0.5
+        },
+        {
+          "x": -0.5,
+          "y": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0
+        }
+      ]
     },
     {
-      "id": "add_norm_2",
-      "label": "Add & Norm",
-      "role": "intermediate",
+      "id": "z1",
+      "label": "z₁",
+      "role": "decoder",
       "shape": "rounded_rectangle",
-      "x": 640, "y": 460,
-      "width": 320, "height": 48
+      "x": 310,
+      "y": 280,
+      "width": 120,
+      "height": 30,
+      "font_size": 18
     },
     {
-      "id": "output",
-      "label": "To Next Encoder",
-      "role": "output",
+      "id": "z2",
+      "label": "z₂",
+      "role": "decoder",
       "shape": "rounded_rectangle",
-      "x": 640, "y": 320,
-      "width": 320, "height": 56
+      "x": 540,
+      "y": 280,
+      "width": 120,
+      "height": 30,
+      "font_size": 18
     },
     {
-      "id": "residual_label_1",
-      "label": "+",
-      "role": "neutral",
-      "shape": "circle",
-      "x": 1040, "y": 740,
-      "width": 36, "height": 36
+      "id": "z3",
+      "label": "z₃",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 770,
+      "y": 280,
+      "width": 120,
+      "height": 30,
+      "font_size": 18
     },
     {
-      "id": "residual_label_2",
-      "label": "+",
-      "role": "neutral",
-      "shape": "circle",
-      "x": 1040, "y": 480,
-      "width": 36, "height": 36
+      "id": "self_attn",
+      "label": "Self-Attention",
+      "role": "attention",
+      "shape": "rounded_rectangle",
+      "stroke_color": "#C4A882",
+      "x": 140,
+      "y": 350,
+      "width": 920,
+      "height": 170,
+      "magnets": [
+        {
+          "x": -0.25,
+          "y": -0.5
+        },
+        {
+          "x": 0,
+          "y": -0.5
+        },
+        {
+          "x": 0.25,
+          "y": -0.5
+        },
+        {
+          "x": -0.25,
+          "y": 0.5
+        },
+        {
+          "x": 0,
+          "y": 0.5
+        },
+        {
+          "x": 0.25,
+          "y": 0.5
+        },
+        {
+          "x": -0.5,
+          "y": 0
+        },
+        {
+          "x": 0.5,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "id": "x1",
+      "label": "x₁",
+      "role": "embedding",
+      "shape": "rounded_rectangle",
+      "x": 310,
+      "y": 580,
+      "width": 120,
+      "height": 30,
+      "font_size": 18
+    },
+    {
+      "id": "x2",
+      "label": "x₂",
+      "role": "embedding",
+      "shape": "rounded_rectangle",
+      "x": 540,
+      "y": 580,
+      "width": 120,
+      "height": 30,
+      "font_size": 18
+    },
+    {
+      "id": "x3",
+      "label": "x₃",
+      "role": "embedding",
+      "shape": "rounded_rectangle",
+      "x": 770,
+      "y": 580,
+      "width": 120,
+      "height": 30,
+      "font_size": 18
+    },
+    {
+      "id": "w1",
+      "label": "Je",
+      "role": "embedding",
+      "shape": "annotation",
+      "x": 320,
+      "y": 630,
+      "width": 100,
+      "height": 36,
+      "font_size": 18,
+      "opacity": 0
+    },
+    {
+      "id": "w2",
+      "label": "suis",
+      "role": "embedding",
+      "shape": "annotation",
+      "x": 550,
+      "y": 630,
+      "width": 100,
+      "height": 36,
+      "font_size": 18,
+      "opacity": 0
+    },
+    {
+      "id": "w3",
+      "label": "étudiant",
+      "role": "embedding",
+      "shape": "annotation",
+      "x": 775,
+      "y": 630,
+      "width": 120,
+      "height": 36,
+      "font_size": 18,
+      "opacity": 0
     }
   ],
   "connections": [
-    { "from": "input", "to": "self_attn" },
-    { "from": "self_attn", "to": "add_norm_1" },
-    { "from": "add_norm_1", "to": "ffn" },
-    { "from": "ffn", "to": "add_norm_2" },
-    { "from": "add_norm_2", "to": "output" },
-    { "from": "input", "to": "residual_label_1", "label": "residual", "style": "dashed" },
-    { "from": "residual_label_1", "to": "add_norm_1", "style": "dashed" },
-    { "from": "add_norm_1", "to": "residual_label_2", "label": "residual", "style": "dashed" },
-    { "from": "residual_label_2", "to": "add_norm_2", "style": "dashed" }
+    {
+      "from": "x1",
+      "to": "self_attn",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 4,
+      "line_type": "straight"
+    },
+    {
+      "from": "x2",
+      "to": "self_attn",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 5,
+      "line_type": "straight"
+    },
+    {
+      "from": "x3",
+      "to": "self_attn",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 6,
+      "line_type": "straight"
+    },
+    {
+      "from": "self_attn",
+      "to": "z1",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 2,
+      "line_type": "straight"
+    },
+    {
+      "from": "self_attn",
+      "to": "z2",
+      "color_override": "#4A5568",
+      "tail_magnet": 2,
+      "head_magnet": 2,
+      "line_type": "straight"
+    },
+    {
+      "from": "self_attn",
+      "to": "z3",
+      "color_override": "#4A5568",
+      "tail_magnet": 3,
+      "head_magnet": 2,
+      "line_type": "straight"
+    },
+    {
+      "from": "z1",
+      "to": "ffn",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 4,
+      "line_type": "straight"
+    },
+    {
+      "from": "z2",
+      "to": "ffn",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 5,
+      "line_type": "straight"
+    },
+    {
+      "from": "z3",
+      "to": "ffn",
+      "color_override": "#4A5568",
+      "tail_magnet": 1,
+      "head_magnet": 6,
+      "line_type": "straight"
+    }
   ]
 }

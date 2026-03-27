@@ -56,7 +56,7 @@ describe("buildDiagramScript", () => {
     expect(script).toContain("Color.RGB");
   });
 
-  it("embeds node data with resolved colors", () => {
+  it("embeds node data with resolved colors from preset", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -65,10 +65,10 @@ describe("buildDiagramScript", () => {
       canvasType: "diagram",
       preset,
     });
-    // Encoder role resolves to primary color
-    expect(script).toContain("#4A90D9");
-    // Decoder role resolves to secondary color
-    expect(script).toContain("#E87878");
+    // Encoder role resolves to primary color from preset
+    expect(script).toContain(preset.colors.primary);
+    // Decoder role resolves to secondary color from preset
+    expect(script).toContain(preset.colors.secondary);
   });
 
   it("embeds connection data", () => {

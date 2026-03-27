@@ -25,6 +25,9 @@ READBACK="$SCRIPT_DIR/readback.js"
 
 mkdir -p "$OUTPUT_DIR"
 
+# Point preset loader at the project's presets directory
+export DIAGRAMMER_PRESETS_DIR="$PROJECT_DIR/presets"
+
 # Ensure project is built
 if [ ! -d "$PROJECT_DIR/dist" ]; then
   echo "Building project..."

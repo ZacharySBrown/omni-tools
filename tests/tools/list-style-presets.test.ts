@@ -19,7 +19,7 @@ describe("listStylePresetsTool", () => {
 
   it("includes descriptions", async () => {
     const result = await listStylePresetsTool.execute({});
-    expect(result.content[0].text).toContain("Jay Alammar");
-    expect(result.content[0].text).toContain("PyData");
+    expect(result.content[0].text).toContain("illustrated");
+    expect(result.content[0].text).toContain("academic");
   });
 });

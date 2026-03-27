@@ -1,29 +1,29 @@
 {
   "meta": {
     "name": "illustrated-technical",
-    "description": "Jay Alammar Illustrated Transformer aesthetic — flat, color-coded, semantic, for ML/AI concept diagrams",
-    "version": "1.0.0"
+    "description": "Pastel illustrated style inspired by Jay Alammar — soft color-coded fills, visible strokes, generous sizing",
+    "version": "2.0.0"
   },
   "colors": {
-    "background": "#FFFFFF",
-    "surface": "#F0F4FF",
-    "surface_alt": "#FFF0F5",
-    "primary": "#4A90D9",
-    "secondary": "#E87878",
-    "accent": "#68C3A3",
-    "accent_warm": "#F5A623",
-    "text_primary": "#1A1A2E",
-    "text_secondary": "#6B7280",
-    "text_on_primary": "#FFFFFF",
-    "text_on_secondary": "#FFFFFF",
+    "background": "transparent",
+    "surface": "#E8F0FE",
+    "surface_alt": "#FDE8EF",
+    "primary": "#C4DAFC",
+    "secondary": "#F4C2CB",
+    "accent": "#B8E6D0",
+    "accent_warm": "#FDECC8",
+    "text_primary": "#2D3748",
+    "text_secondary": "#718096",
+    "text_on_primary": "#2D3748",
+    "text_on_secondary": "#2D3748",
     "connector": "#4A5568",
-    "connector_highlight": "#F5A623",
+    "connector_highlight": "#E8913A",
     "code_bg": "#F7F8FA",
     "code_text": "#2D3748",
-    "border": "#E2E8F0",
-    "success": "#48BB78",
-    "warning": "#ED8936",
-    "danger": "#FC8181"
+    "border": "#CBD5E0",
+    "success": "#B8E6D0",
+    "warning": "#FDECC8",
+    "danger": "#FED7D7"
   },
   "semantic_roles": {
     "encoder": "primary",
@@ -41,12 +41,12 @@
     "label_font": "Helvetica Neue",
     "sizes": {
       "xxl": 48,
-      "xl": 32,
-      "lg": 22,
-      "md": 16,
-      "sm": 12,
-      "xs": 10,
-      "code": 13
+      "xl": 36,
+      "lg": 28,
+      "md": 24,
+      "sm": 16,
+      "xs": 12,
+      "code": 14
     },
     "weights": {
       "title": "Bold",
@@ -55,28 +55,28 @@
     }
   },
   "shapes": {
-    "default_corner_radius": 8,
-    "node_corner_radius": 8,
-    "pill_corner_radius": 20,
+    "default_corner_radius": 12,
+    "node_corner_radius": 12,
+    "pill_corner_radius": 24,
     "stroke_width_default": 1.5,
     "stroke_width_emphasis": 2.5,
     "stroke_width_subtle": 0.5,
-    "min_node_width": 120,
-    "min_node_height": 48,
+    "min_node_width": 200,
+    "min_node_height": 64,
     "token_cell_width": 80,
     "token_cell_height": 40,
     "shadow": false,
     "shadow_blur": 0,
     "shadow_offset_x": 0,
     "shadow_offset_y": 0,
-    "shadow_color": "#00000020"
+    "shadow_color": "#00000000"
   },
   "connectors": {
     "default_stroke": "#4A5568",
     "default_width": 2.0,
     "arrow_style": "FilledArrow",
     "routing": "orthogonal",
-    "label_font_size": 11
+    "label_font_size": 13
   },
   "layout": {
     "canvas_width_slide": 1920,
@@ -84,8 +84,8 @@
     "canvas_width_diagram": 1600,
     "canvas_height_diagram": 1200,
     "margin": 80,
-    "node_h_spacing": 60,
-    "node_v_spacing": 40,
+    "node_h_spacing": 80,
+    "node_v_spacing": 60,
     "title_margin_top": 60,
     "content_margin_top": 140
   }

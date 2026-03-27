@@ -1,38 +1,38 @@
 {
   "meta": {
     "name": "clean-academic",
-    "description": "Zak Brown PyData/AnacondaCon style — white background, minimal, technical, clean academic aesthetic",
-    "version": "1.0.0"
+    "description": "Clean academic style — desaturated palette, transparent background, generous spacing",
+    "version": "2.0.0"
   },
   "colors": {
-    "background": "#FFFFFF",
-    "surface": "#F5F5F5",
-    "surface_alt": "#EEF2FF",
-    "primary": "#2C5F8A",
-    "secondary": "#6B7280",
-    "accent": "#3B82F6",
-    "accent_warm": "#F59E0B",
-    "text_primary": "#111827",
-    "text_secondary": "#6B7280",
-    "text_on_primary": "#FFFFFF",
-    "text_on_secondary": "#FFFFFF",
-    "connector": "#374151",
-    "connector_highlight": "#3B82F6",
-    "code_bg": "#F3F4F6",
-    "code_text": "#1F2937",
-    "border": "#D1D5DB",
-    "success": "#059669",
-    "warning": "#D97706",
-    "danger": "#DC2626"
+    "background": "transparent",
+    "surface": "#EDF2F7",
+    "surface_alt": "#E2E8F0",
+    "primary": "#BEE3F8",
+    "secondary": "#C6F6D5",
+    "accent": "#C3DAFE",
+    "accent_warm": "#FEFCBF",
+    "text_primary": "#1A202C",
+    "text_secondary": "#4A5568",
+    "text_on_primary": "#1A202C",
+    "text_on_secondary": "#1A202C",
+    "connector": "#4A5568",
+    "connector_highlight": "#3182CE",
+    "code_bg": "#F7FAFC",
+    "code_text": "#1A202C",
+    "border": "#CBD5E0",
+    "success": "#C6F6D5",
+    "warning": "#FEFCBF",
+    "danger": "#FED7D7"
   },
   "semantic_roles": {
     "encoder": "primary",
-    "decoder": "accent",
+    "decoder": "secondary",
     "attention": "accent_warm",
-    "embedding": "surface_alt",
+    "embedding": "accent",
     "output": "success",
     "input": "surface",
-    "intermediate": "secondary"
+    "intermediate": "surface_alt"
   },
   "typography": {
     "heading_font": "Helvetica Neue",
@@ -41,12 +41,12 @@
     "label_font": "Helvetica Neue",
     "sizes": {
       "xxl": 44,
-      "xl": 30,
-      "lg": 20,
-      "md": 15,
-      "sm": 11,
-      "xs": 9,
-      "code": 12
+      "xl": 32,
+      "lg": 24,
+      "md": 18,
+      "sm": 13,
+      "xs": 10,
+      "code": 13
     },
     "weights": {
       "title": "Bold",
@@ -55,28 +55,28 @@
     }
   },
   "shapes": {
-    "default_corner_radius": 4,
-    "node_corner_radius": 4,
-    "pill_corner_radius": 16,
+    "default_corner_radius": 6,
+    "node_corner_radius": 6,
+    "pill_corner_radius": 18,
     "stroke_width_default": 1.0,
     "stroke_width_emphasis": 2.0,
     "stroke_width_subtle": 0.5,
-    "min_node_width": 100,
-    "min_node_height": 44,
+    "min_node_width": 180,
+    "min_node_height": 56,
     "token_cell_width": 72,
     "token_cell_height": 36,
     "shadow": false,
     "shadow_blur": 0,
     "shadow_offset_x": 0,
     "shadow_offset_y": 0,
-    "shadow_color": "#00000010"
+    "shadow_color": "#00000000"
   },
   "connectors": {
-    "default_stroke": "#374151",
+    "default_stroke": "#4A5568",
     "default_width": 1.5,
     "arrow_style": "FilledArrow",
     "routing": "orthogonal",
-    "label_font_size": 10
+    "label_font_size": 12
   },
   "layout": {
     "canvas_width_slide": 1920,
@@ -84,8 +84,8 @@
     "canvas_width_diagram": 1400,
     "canvas_height_diagram": 1050,
     "margin": 80,
-    "node_h_spacing": 50,
-    "node_v_spacing": 36,
+    "node_h_spacing": 70,
+    "node_v_spacing": 50,
     "title_margin_top": 60,
     "content_margin_top": 130
   }

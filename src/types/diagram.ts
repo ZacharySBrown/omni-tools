@@ -45,17 +45,26 @@ export type CanvasType = z.infer<typeof CanvasType>;
 export const ExportFormat = z.enum(["pdf", "svg", "png", "tiff"]);
 export type ExportFormat = z.infer<typeof ExportFormat>;
 
+export const MagnetPoint = z.object({
+  x: z.number(),
+  y: z.number(),
+});
+
 export const NodeSchema = z.object({
   id: z.string(),
   label: z.string(),
   role: SemanticRole.default("neutral"),
   shape: NodeShape.default("rounded_rectangle"),
   color_override: z.string().optional(),
+  stroke_color: z.string().optional(),
   x: z.number().optional(),
   y: z.number().optional(),
   width: z.number().optional(),
   height: z.number().optional(),
   sublabel: z.string().optional(),
+  magnets: z.array(MagnetPoint).optional(),
+  opacity: z.number().min(0).max(1).optional(),
+  font_size: z.number().optional(),
 });
 export type DiagramNode = z.infer<typeof NodeSchema>;
 
@@ -65,6 +74,9 @@ export const ConnectionSchema = z.object({
   label: z.string().optional(),
   style: ConnectionStyle.default("default"),
   color_override: z.string().optional(),
+  tail_magnet: z.number().optional(),
+  head_magnet: z.number().optional(),
+  line_type: z.enum(["straight", "orthogonal", "curved"]).optional(),
 });
 export type DiagramConnection = z.infer<typeof ConnectionSchema>;
 

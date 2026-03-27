@@ -1,120 +1,103 @@
 #!/usr/bin/env osascript -l JavaScript
 //
-// readback.js — JXA script to extract all shape geometries and styles
-// from the frontmost OmniGraffle document.
+// readback.js — JXA script that uses evaluateJavascript() to extract
+// all shape geometries and styles from the frontmost OmniGraffle document.
 //
 // Usage:
 //   osascript readback.js
 //   osascript readback.js > output.json
 //
-// Returns JSON with canvas info and all shapes/lines with their
-// geometry, fill, stroke, text, and connection info.
+// Returns JSON with canvas info, shapes (geometry + fill + text), and lines.
 //
 
 function run() {
   const og = Application("OmniGraffle");
   og.includeStandardAdditions = true;
 
-  const doc = og.documents[0];
-  if (!doc) {
+  if (og.documents.length === 0) {
     return JSON.stringify({ error: "No document open in OmniGraffle" });
   }
 
-  const result = {
-    document: {
-      name: doc.name(),
-    },
-    canvases: [],
-  };
-
-  const canvases = doc.canvases();
-  for (let ci = 0; ci < canvases.length; ci++) {
-    const canvas = canvases[ci];
-    const canvasData = {
-      name: canvas.name(),
-      size: {
-        width: canvas.canvasSize().width,
-        height: canvas.canvasSize().height,
-      },
-      shapes: [],
-      lines: [],
-    };
-
-    // Extract all shapes (non-line graphics)
-    const shapes = canvas.shapes();
-    for (let si = 0; si < shapes.length; si++) {
-      const s = shapes[si];
-      const geom = s.geometry();
-      const shapeData = {
-        id: s.id(),
-        name: s.name(),
-        text: s.text(),
-        shapeType: s.shape(),
-        geometry: {
-          x: geom.x,
-          y: geom.y,
-          width: geom.width,
-          height: geom.height,
-        },
-        style: {
-          fillColor: colorToHex(s.fillColor()),
-          strokeColor: colorToHex(s.strokeColor()),
-          strokeThickness: s.strokeThickness(),
-          cornerRadius: s.cornerRadius(),
-        },
-        textStyle: {
-          font: s.font(),
-          size: s.size(),
-          textColor: colorToHex(s.textColor()),
-          alignment: s.alignment(),
-        },
-      };
-      canvasData.shapes.push(shapeData);
+  // Run inside OmniGraffle via Omni Automation where the geometry API works
+  const omniCode = `(function() {
+    function colorToHex(c) {
+      if (!c) return null;
+      try {
+        var r = Math.round(c.red * 255);
+        var g = Math.round(c.green * 255);
+        var b = Math.round(c.blue * 255);
+        var hex = "#";
+        hex += (r < 16 ? "0" : "") + r.toString(16);
+        hex += (g < 16 ? "0" : "") + g.toString(16);
+        hex += (b < 16 ? "0" : "") + b.toString(16);
+        return hex.toUpperCase();
+      } catch(e) { return null; }
     }
 
-    // Extract all lines/connectors
-    const lines = canvas.lines();
-    for (let li = 0; li < lines.length; li++) {
-      const l = lines[li];
-      const lineData = {
-        id: l.id(),
-        source: l.source() ? l.source().name() : null,
-        destination: l.destination() ? l.destination().name() : null,
-        text: l.text(),
-        points: l.pointList().map(function (p) {
-          return { x: p.x, y: p.y };
-        }),
-        style: {
-          strokeColor: colorToHex(l.strokeColor()),
-          strokeThickness: l.strokeThickness(),
-          headType: l.headType(),
-          tailType: l.tailType(),
-          lineType: l.lineType(),
-        },
+    var result = { document: { name: document.name }, canvases: [] };
+
+    for (var ci = 0; ci < document.portfolio.canvases.length; ci++) {
+      var canvas = document.portfolio.canvases[ci];
+      var canvasData = {
+        name: canvas.name,
+        size: { width: canvas.size.width, height: canvas.size.height },
+        shapes: [],
+        lines: []
       };
-      canvasData.lines.push(lineData);
+
+      for (var i = 0; i < canvas.graphics.length; i++) {
+        var g = canvas.graphics[i];
+        var geo = g.geometry;
+
+        if (g instanceof Line) {
+          canvasData.lines.push({
+            id: "" + g.id,
+            source: g.head ? (g.head.name || "") : null,
+            destination: g.tail ? (g.tail.name || "") : null,
+            text: "" + (g.text || ""),
+            geometry: {
+              x: Math.round(geo.x),
+              y: Math.round(geo.y),
+              width: Math.round(geo.width),
+              height: Math.round(geo.height)
+            },
+            style: {
+              strokeColor: colorToHex(g.strokeColor),
+              strokeThickness: g.strokeThickness,
+              lineType: "" + g.lineType
+            }
+          });
+        } else if (g instanceof Shape) {
+          canvasData.shapes.push({
+            id: "" + g.id,
+            name: g.name || "",
+            text: "" + (g.text || ""),
+            geometry: {
+              x: Math.round(geo.x),
+              y: Math.round(geo.y),
+              width: Math.round(geo.width),
+              height: Math.round(geo.height)
+            },
+            style: {
+              fillColor: colorToHex(g.fillColor),
+              strokeColor: colorToHex(g.strokeColor),
+              strokeThickness: g.strokeThickness,
+              cornerRadius: g.cornerRadius
+            },
+            textStyle: {
+              fontName: g.fontName,
+              textSize: g.textSize,
+              textColor: colorToHex(g.textColor)
+            }
+          });
+        }
+      }
+
+      result.canvases.push(canvasData);
     }
 
-    result.canvases.push(canvasData);
-  }
+    return JSON.stringify(result, null, 2);
+  })()`;
 
-  return JSON.stringify(result, null, 2);
-}
-
-function colorToHex(color) {
-  // OmniGraffle colors are {red, green, blue, alpha} with 0-1 range
-  if (!color) return null;
-  try {
-    const r = Math.round(color.red * 255);
-    const g = Math.round(color.green * 255);
-    const b = Math.round(color.blue * 255);
-    return (
-      "#" +
-      r.toString(16).padStart(2, "0") +
-      g.toString(16).padStart(2, "0") +
-      b.toString(16).padStart(2, "0")
-    ).toUpperCase();
-  } catch (e) {
-    return null;
-  }
+  return og.evaluateJavascript(omniCode);
 }

@@ -1,0 +1,1579 @@
+{
+  "document": {
+    "name": "Untitled"
+  },
+  "canvases": [
+    {
+      "name": "Self-Attention Vectors",
+      "size": {
+        "width": 940,
+        "height": 584
+      },
+      "shapes": [
+        {
+          "id": "72",
+          "name": "wv_lbl",
+          "text": "Wᵛ",
+          "geometry": {
+            "x": 800,
+            "y": 458,
+            "width": 80,
+            "height": 40
+          },
+          "style": {
+            "fillColor": "#2B6CB0",
+            "strokeColor": "#205184",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 26,
+            "textColor": "#2B6CB0"
+          }
+        },
+        {
+          "id": "71",
+          "name": "wv_r3c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 496,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "70",
+          "name": "wv_r3c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 496,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "69",
+          "name": "wv_r3c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 496,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "68",
+          "name": "wv_r2c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "67",
+          "name": "wv_r2c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "66",
+          "name": "wv_r2c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "65",
+          "name": "wv_r1c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 440,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "64",
+          "name": "wv_r1c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 440,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "63",
+          "name": "wv_r1c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 440,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D1E8FF",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "62",
+          "name": "v2_c3",
+          "text": "",
+          "geometry": {
+            "x": 618,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#BEE3F8",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "61",
+          "name": "v2_c2",
+          "text": "",
+          "geometry": {
+            "x": 590,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#BEE3F8",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "60",
+          "name": "v2_c1",
+          "text": "",
+          "geometry": {
+            "x": 562,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#BEE3F8",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "59",
+          "name": "v2_lbl",
+          "text": "v₂",
+          "geometry": {
+            "x": 506,
+            "y": 465,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#3182CE",
+            "strokeColor": "#25629B",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#3182CE"
+          }
+        },
+        {
+          "id": "58",
+          "name": "v1_c3",
+          "text": "",
+          "geometry": {
+            "x": 368,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#BEE3F8",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "57",
+          "name": "v1_c2",
+          "text": "",
+          "geometry": {
+            "x": 340,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#BEE3F8",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "56",
+          "name": "v1_c1",
+          "text": "",
+          "geometry": {
+            "x": 312,
+            "y": 468,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#BEE3F8",
+            "strokeColor": "#63B3ED",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "55",
+          "name": "v1_lbl",
+          "text": "v₁",
+          "geometry": {
+            "x": 256,
+            "y": 465,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#3182CE",
+            "strokeColor": "#25629B",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#3182CE"
+          }
+        },
+        {
+          "id": "54",
+          "name": "lbl_values",
+          "text": "Values",
+          "geometry": {
+            "x": 60,
+            "y": 465,
+            "width": 130,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#E8F0FE",
+            "strokeColor": "#AEB4BF",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "53",
+          "name": "wk_lbl",
+          "text": "Wᴷ",
+          "geometry": {
+            "x": 800,
+            "y": 345,
+            "width": 80,
+            "height": 40
+          },
+          "style": {
+            "fillColor": "#C05621",
+            "strokeColor": "#904119",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 26,
+            "textColor": "#C05621"
+          }
+        },
+        {
+          "id": "52",
+          "name": "wk_r3c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 386,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "51",
+          "name": "wk_r3c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 386,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "50",
+          "name": "wk_r3c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 386,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "49",
+          "name": "wk_r2c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 358,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "48",
+          "name": "wk_r2c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 358,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "47",
+          "name": "wk_r2c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 358,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "46",
+          "name": "wk_r1c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 330,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "45",
+          "name": "wk_r1c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 330,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "44",
+          "name": "wk_r1c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 330,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FEEBC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "43",
+          "name": "k2_c3",
+          "text": "",
+          "geometry": {
+            "x": 618,
+            "y": 353,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FDECC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "42",
+          "name": "k2_c2",
+          "text": "",
+          "geometry": {
+            "x": 590,
+            "y": 353,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FDECC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "41",
+          "name": "k2_c1",
+          "text": "",
+          "geometry": {
+            "x": 562,
+            "y": 353,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FDECC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "40",
+          "name": "k2_lbl",
+          "text": "k₂",
+          "geometry": {
+            "x": 506,
+            "y": 350,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#DD6B20",
+            "strokeColor": "#A65018",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#DD6B20"
+          }
+        },
+        {
+          "id": "39",
+          "name": "k1_c3",
+          "text": "",
+          "geometry": {
+            "x": 368,
+            "y": 353,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FDECC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "38",
+          "name": "k1_c2",
+          "text": "",
+          "geometry": {
+            "x": 340,
+            "y": 353,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FDECC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "37",
+          "name": "k1_c1",
+          "text": "",
+          "geometry": {
+            "x": 312,
+            "y": 353,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#FDECC8",
+            "strokeColor": "#ED8936",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "36",
+          "name": "k1_lbl",
+          "text": "k₁",
+          "geometry": {
+            "x": 256,
+            "y": 350,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#DD6B20",
+            "strokeColor": "#A65018",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#DD6B20"
+          }
+        },
+        {
+          "id": "35",
+          "name": "lbl_keys",
+          "text": "Keys",
+          "geometry": {
+            "x": 60,
+            "y": 350,
+            "width": 130,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#E8F0FE",
+            "strokeColor": "#AEB4BF",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "34",
+          "name": "wq_lbl",
+          "text": "Wᴴ",
+          "geometry": {
+            "x": 800,
+            "y": 230,
+            "width": 80,
+            "height": 40
+          },
+          "style": {
+            "fillColor": "#805AD5",
+            "strokeColor": "#6044A0",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 26,
+            "textColor": "#805AD5"
+          }
+        },
+        {
+          "id": "33",
+          "name": "wq_r3c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 271,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "32",
+          "name": "wq_r3c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 271,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "31",
+          "name": "wq_r3c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 271,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "30",
+          "name": "wq_r2c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 243,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "29",
+          "name": "wq_r2c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 243,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "28",
+          "name": "wq_r2c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 243,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "27",
+          "name": "wq_r1c3",
+          "text": "",
+          "geometry": {
+            "x": 766,
+            "y": 215,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "26",
+          "name": "wq_r1c2",
+          "text": "",
+          "geometry": {
+            "x": 738,
+            "y": 215,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "25",
+          "name": "wq_r1c1",
+          "text": "",
+          "geometry": {
+            "x": 710,
+            "y": 215,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E9D8FD",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "24",
+          "name": "q2_c3",
+          "text": "",
+          "geometry": {
+            "x": 618,
+            "y": 238,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D6BCFA",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "23",
+          "name": "q2_c2",
+          "text": "",
+          "geometry": {
+            "x": 590,
+            "y": 238,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D6BCFA",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "22",
+          "name": "q2_c1",
+          "text": "",
+          "geometry": {
+            "x": 562,
+            "y": 238,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D6BCFA",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "21",
+          "name": "q2_lbl",
+          "text": "q₂",
+          "geometry": {
+            "x": 506,
+            "y": 235,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#9F7AEA",
+            "strokeColor": "#775CB0",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#9F7AEA"
+          }
+        },
+        {
+          "id": "20",
+          "name": "q1_c3",
+          "text": "",
+          "geometry": {
+            "x": 368,
+            "y": 238,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D6BCFA",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "19",
+          "name": "q1_c2",
+          "text": "",
+          "geometry": {
+            "x": 340,
+            "y": 238,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D6BCFA",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "18",
+          "name": "q1_c1",
+          "text": "",
+          "geometry": {
+            "x": 312,
+            "y": 238,
+            "width": 28,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#D6BCFA",
+            "strokeColor": "#B794F4",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "17",
+          "name": "q1_lbl",
+          "text": "q₁",
+          "geometry": {
+            "x": 256,
+            "y": 235,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#9F7AEA",
+            "strokeColor": "#775CB0",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#9F7AEA"
+          }
+        },
+        {
+          "id": "16",
+          "name": "lbl_queries",
+          "text": "Queries",
+          "geometry": {
+            "x": 60,
+            "y": 235,
+            "width": 130,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#E8F0FE",
+            "strokeColor": "#AEB4BF",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "15",
+          "name": "x2_c4",
+          "text": "",
+          "geometry": {
+            "x": 647,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "14",
+          "name": "x2_c3",
+          "text": "",
+          "geometry": {
+            "x": 617,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "13",
+          "name": "x2_c2",
+          "text": "",
+          "geometry": {
+            "x": 587,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "12",
+          "name": "x2_c1",
+          "text": "",
+          "geometry": {
+            "x": 557,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "11",
+          "name": "x2_lbl",
+          "text": "X₂",
+          "geometry": {
+            "x": 501,
+            "y": 125,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#38A169",
+            "strokeColor": "#2A794F",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#38A169"
+          }
+        },
+        {
+          "id": "10",
+          "name": "x1_c4",
+          "text": "",
+          "geometry": {
+            "x": 397,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "9",
+          "name": "x1_c3",
+          "text": "",
+          "geometry": {
+            "x": 367,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "8",
+          "name": "x1_c2",
+          "text": "",
+          "geometry": {
+            "x": 337,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "7",
+          "name": "x1_c1",
+          "text": "",
+          "geometry": {
+            "x": 307,
+            "y": 128,
+            "width": 30,
+            "height": 30
+          },
+          "style": {
+            "fillColor": "#7BC67E",
+            "strokeColor": "#4CAF50",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "6",
+          "name": "x1_lbl",
+          "text": "X₁",
+          "geometry": {
+            "x": 251,
+            "y": 125,
+            "width": 50,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#38A169",
+            "strokeColor": "#2A794F",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#38A169"
+          }
+        },
+        {
+          "id": "5",
+          "name": "lbl_embedding",
+          "text": "Embedding",
+          "geometry": {
+            "x": 60,
+            "y": 125,
+            "width": 130,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#E8F0FE",
+            "strokeColor": "#AEB4BF",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "4",
+          "name": "hdr_machines",
+          "text": "Machines",
+          "geometry": {
+            "x": 535,
+            "y": 60,
+            "width": 160,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#38A169",
+            "strokeColor": "#2A794F",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 20,
+            "textColor": "#38A169"
+          }
+        },
+        {
+          "id": "3",
+          "name": "hdr_thinking",
+          "text": "Thinking",
+          "geometry": {
+            "x": 285,
+            "y": 60,
+            "width": 160,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#38A169",
+            "strokeColor": "#2A794F",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 20,
+            "textColor": "#38A169"
+          }
+        },
+        {
+          "id": "2",
+          "name": "hdr_input",
+          "text": "Input",
+          "geometry": {
+            "x": 75,
+            "y": 60,
+            "width": 100,
+            "height": 36
+          },
+          "style": {
+            "fillColor": "#E8F0FE",
+            "strokeColor": "#AEB4BF",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#2D3748"
+          }
+        }
+      ],
+      "lines": []
+    }
+  ]
+}
