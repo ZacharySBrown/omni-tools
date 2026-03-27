@@ -1,0 +1,162 @@
+{
+  "title": "Transformer Encoder-Decoder Architecture",
+  "description": "Full encoder-decoder from Jay Alammar's Illustrated Transformer: 6 stacked encoders (left), 6 stacked decoders (right), with cross-attention connections.",
+  "style_preset": "illustrated-technical",
+  "canvas_type": "diagram",
+  "layout": "manual",
+  "nodes": [
+    {
+      "id": "input_embed",
+      "label": "Input\nEmbedding",
+      "role": "input",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 1060,
+      "width": 200, "height": 56
+    },
+    {
+      "id": "enc_1",
+      "label": "Encoder #1",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 920,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "enc_2",
+      "label": "Encoder #2",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 800,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "enc_3",
+      "label": "Encoder #3",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 680,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "enc_4",
+      "label": "Encoder #4",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 560,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "enc_5",
+      "label": "Encoder #5",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 440,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "enc_6",
+      "label": "Encoder #6",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 300, "y": 320,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "output_embed",
+      "label": "Output\nEmbedding",
+      "role": "input",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 1060,
+      "width": 200, "height": 56
+    },
+    {
+      "id": "dec_1",
+      "label": "Decoder #1",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 920,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "dec_2",
+      "label": "Decoder #2",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 800,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "dec_3",
+      "label": "Decoder #3",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 680,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "dec_4",
+      "label": "Decoder #4",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 560,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "dec_5",
+      "label": "Decoder #5",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 440,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "dec_6",
+      "label": "Decoder #6",
+      "role": "decoder",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 320,
+      "width": 200, "height": 72
+    },
+    {
+      "id": "linear",
+      "label": "Linear",
+      "role": "output",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 200,
+      "width": 200, "height": 52
+    },
+    {
+      "id": "softmax",
+      "label": "Softmax",
+      "role": "output",
+      "shape": "rounded_rectangle",
+      "x": 1000, "y": 110,
+      "width": 200, "height": 52
+    }
+  ],
+  "connections": [
+    { "from": "input_embed", "to": "enc_1" },
+    { "from": "enc_1", "to": "enc_2" },
+    { "from": "enc_2", "to": "enc_3" },
+    { "from": "enc_3", "to": "enc_4" },
+    { "from": "enc_4", "to": "enc_5" },
+    { "from": "enc_5", "to": "enc_6" },
+
+    { "from": "output_embed", "to": "dec_1" },
+    { "from": "dec_1", "to": "dec_2" },
+    { "from": "dec_2", "to": "dec_3" },
+    { "from": "dec_3", "to": "dec_4" },
+    { "from": "dec_4", "to": "dec_5" },
+    { "from": "dec_5", "to": "dec_6" },
+
+    { "from": "dec_6", "to": "linear" },
+    { "from": "linear", "to": "softmax" },
+
+    { "from": "enc_6", "to": "dec_1", "label": "K, V", "style": "highlight" },
+    { "from": "enc_6", "to": "dec_2", "label": "K, V", "style": "highlight" },
+    { "from": "enc_6", "to": "dec_3", "label": "K, V", "style": "highlight" },
+    { "from": "enc_6", "to": "dec_4", "label": "K, V", "style": "highlight" },
+    { "from": "enc_6", "to": "dec_5", "label": "K, V", "style": "highlight" },
+    { "from": "enc_6", "to": "dec_6", "label": "K, V", "style": "highlight" }
+  ]
+}
