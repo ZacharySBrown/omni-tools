@@ -23,18 +23,27 @@ describe("loadPreset", () => {
     expect(preset.shapes.default_corner_radius).toBeGreaterThan(0);
   });
 
+  it("loads dark-technical preset", () => {
+    const preset = loadPreset("dark-technical");
+    expect(preset.meta.name).toBe("dark-technical");
+    expect(preset.colors.background).toBe("#1A202C");
+    expect(preset.colors.text_primary).toBe("#E2E8F0");
+    expect(preset.connectors.default_stroke).toBe("#A0AEC0");
+  });
+
   it("throws for nonexistent preset", () => {
     expect(() => loadPreset("nonexistent")).toThrow("Style preset not found");
   });
 });
 
 describe("listPresets", () => {
-  it("returns both built-in presets", () => {
+  it("returns all built-in presets", () => {
     const presets = listPresets();
-    expect(presets.length).toBeGreaterThanOrEqual(2);
+    expect(presets.length).toBeGreaterThanOrEqual(3);
     const names = presets.map((p) => p.name);
     expect(names).toContain("illustrated-technical");
     expect(names).toContain("clean-academic");
+    expect(names).toContain("dark-technical");
   });
 
   it("includes description and version", () => {

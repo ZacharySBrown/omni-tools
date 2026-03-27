@@ -15,6 +15,7 @@ describe("listStylePresetsTool", () => {
     const result = await listStylePresetsTool.execute({});
     expect(result.content[0].text).toContain("illustrated-technical");
     expect(result.content[0].text).toContain("clean-academic");
+    expect(result.content[0].text).toContain("dark-technical");
   });
 
   it("includes descriptions", async () => {

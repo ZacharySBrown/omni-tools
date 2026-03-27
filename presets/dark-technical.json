@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "name": "dark-technical",
+    "description": "Dark theme for technical diagrams — light text on dark backgrounds, saturated accents",
+    "version": "1.0.0"
+  },
+  "colors": {
+    "background": "#1A202C",
+    "surface": "#2D3748",
+    "surface_alt": "#3D4A5C",
+    "primary": "#4299E1",
+    "secondary": "#ED64A6",
+    "accent": "#48BB78",
+    "accent_warm": "#ED8936",
+    "text_primary": "#E2E8F0",
+    "text_secondary": "#A0AEC0",
+    "text_on_primary": "#FFFFFF",
+    "text_on_secondary": "#FFFFFF",
+    "connector": "#A0AEC0",
+    "connector_highlight": "#F6AD55",
+    "code_bg": "#1A202C",
+    "code_text": "#E2E8F0",
+    "border": "#4A5568",
+    "success": "#48BB78",
+    "warning": "#ECC94B",
+    "danger": "#FC8181"
+  },
+  "semantic_roles": {
+    "encoder": "primary",
+    "decoder": "secondary",
+    "attention": "accent_warm",
+    "embedding": "accent",
+    "output": "success",
+    "input": "surface",
+    "intermediate": "surface_alt"
+  },
+  "typography": {
+    "heading_font": "Helvetica Neue",
+    "body_font": "Helvetica Neue",
+    "code_font": "Menlo",
+    "label_font": "Helvetica Neue",
+    "sizes": {
+      "xxl": 48,
+      "xl": 36,
+      "lg": 28,
+      "md": 24,
+      "sm": 16,
+      "xs": 12,
+      "code": 14
+    },
+    "weights": {
+      "title": "Bold",
+      "label": "Medium",
+      "annotation": "Regular"
+    }
+  },
+  "shapes": {
+    "default_corner_radius": 12,
+    "node_corner_radius": 12,
+    "pill_corner_radius": 24,
+    "stroke_width_default": 1.5,
+    "stroke_width_emphasis": 2.5,
+    "stroke_width_subtle": 0.5,
+    "min_node_width": 200,
+    "min_node_height": 64,
+    "token_cell_width": 80,
+    "token_cell_height": 40,
+    "shadow": false,
+    "shadow_blur": 0,
+    "shadow_offset_x": 0,
+    "shadow_offset_y": 0,
+    "shadow_color": "#00000000"
+  },
+  "connectors": {
+    "default_stroke": "#A0AEC0",
+    "default_width": 2.0,
+    "arrow_style": "FilledArrow",
+    "routing": "orthogonal",
+    "label_font_size": 13
+  },
+  "layout": {
+    "canvas_width_slide": 1920,
+    "canvas_height_slide": 1080,
+    "canvas_width_diagram": 1600,
+    "canvas_height_diagram": 1200,
+    "margin": 80,
+    "node_h_spacing": 80,
+    "node_v_spacing": 60,
+    "title_margin_top": 60,
+    "content_margin_top": 140
+  }
+}
