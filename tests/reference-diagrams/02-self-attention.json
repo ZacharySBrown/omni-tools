@@ -1,0 +1,114 @@
+{
+  "title": "Self-Attention Mechanism",
+  "description": "Self-attention computation from Jay Alammar's Illustrated Transformer: input embedding -> Q/K/V projections -> score -> softmax -> weighted sum. Horizontal left-to-right flow.",
+  "style_preset": "illustrated-technical",
+  "canvas_type": "diagram",
+  "layout": "manual",
+  "nodes": [
+    {
+      "id": "x1",
+      "label": "x\u2081",
+      "role": "input",
+      "shape": "rounded_rectangle",
+      "x": 80, "y": 520,
+      "width": 100, "height": 56
+    },
+    {
+      "id": "wq",
+      "label": "W\u1d34",
+      "role": "attention",
+      "shape": "rectangle",
+      "x": 280, "y": 340,
+      "width": 100, "height": 56
+    },
+    {
+      "id": "wk",
+      "label": "W\u1d37",
+      "role": "attention",
+      "shape": "rectangle",
+      "x": 280, "y": 520,
+      "width": 100, "height": 56
+    },
+    {
+      "id": "wv",
+      "label": "W\u1d5b",
+      "role": "attention",
+      "shape": "rectangle",
+      "x": 280, "y": 700,
+      "width": 100, "height": 56
+    },
+    {
+      "id": "q1",
+      "label": "q\u2081",
+      "role": "attention",
+      "shape": "pill",
+      "color_override": "#E8945A",
+      "x": 480, "y": 340,
+      "width": 100, "height": 48
+    },
+    {
+      "id": "k1",
+      "label": "k\u2081",
+      "role": "attention",
+      "shape": "pill",
+      "color_override": "#F5C842",
+      "x": 480, "y": 520,
+      "width": 100, "height": 48
+    },
+    {
+      "id": "v1",
+      "label": "v\u2081",
+      "role": "attention",
+      "shape": "pill",
+      "color_override": "#7EB5D6",
+      "x": 480, "y": 700,
+      "width": 100, "height": 48
+    },
+    {
+      "id": "score",
+      "label": "Score\n(q \u00b7 k)",
+      "role": "intermediate",
+      "shape": "rounded_rectangle",
+      "x": 700, "y": 430,
+      "width": 120, "height": 56
+    },
+    {
+      "id": "softmax",
+      "label": "Softmax",
+      "role": "intermediate",
+      "shape": "rounded_rectangle",
+      "x": 900, "y": 430,
+      "width": 120, "height": 56
+    },
+    {
+      "id": "weighted",
+      "label": "Weighted\nValues",
+      "role": "intermediate",
+      "shape": "rounded_rectangle",
+      "x": 1100, "y": 520,
+      "width": 120, "height": 56
+    },
+    {
+      "id": "z1",
+      "label": "z\u2081",
+      "role": "output",
+      "shape": "rounded_rectangle",
+      "x": 1340, "y": 520,
+      "width": 100, "height": 56
+    }
+  ],
+  "connections": [
+    { "from": "x1", "to": "wq" },
+    { "from": "x1", "to": "wk" },
+    { "from": "x1", "to": "wv" },
+    { "from": "wq", "to": "q1" },
+    { "from": "wk", "to": "k1" },
+    { "from": "wv", "to": "v1" },
+    { "from": "q1", "to": "score" },
+    { "from": "k1", "to": "score" },
+    { "from": "score", "to": "softmax" },
+    { "from": "softmax", "to": "weighted" },
+    { "from": "v1", "to": "weighted" },
+    { "from": "weighted", "to": "z1" }
+  ]
+}

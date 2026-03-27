@@ -1,0 +1,84 @@
+{
+  "title": "Transformer Encoder Block",
+  "description": "Single encoder block from Jay Alammar's Illustrated Transformer: self-attention + feed-forward with residual connections and layer norm. Vertical bottom-to-top flow.",
+  "style_preset": "illustrated-technical",
+  "canvas_type": "diagram",
+  "layout": "manual",
+  "nodes": [
+    {
+      "id": "input",
+      "label": "Input Embedding",
+      "role": "input",
+      "shape": "rounded_rectangle",
+      "x": 640, "y": 1020,
+      "width": 320, "height": 56
+    },
+    {
+      "id": "self_attn",
+      "label": "Self-Attention",
+      "role": "attention",
+      "shape": "rounded_rectangle",
+      "x": 640, "y": 840,
+      "width": 320, "height": 72
+    },
+    {
+      "id": "add_norm_1",
+      "label": "Add & Norm",
+      "role": "intermediate",
+      "shape": "rounded_rectangle",
+      "x": 640, "y": 720,
+      "width": 320, "height": 48
+    },
+    {
+      "id": "ffn",
+      "label": "Feed Forward",
+      "role": "encoder",
+      "shape": "rounded_rectangle",
+      "x": 640, "y": 580,
+      "width": 320, "height": 72
+    },
+    {
+      "id": "add_norm_2",
+      "label": "Add & Norm",
+      "role": "intermediate",
+      "shape": "rounded_rectangle",
+      "x": 640, "y": 460,
+      "width": 320, "height": 48
+    },
+    {
+      "id": "output",
+      "label": "To Next Encoder",
+      "role": "output",
+      "shape": "rounded_rectangle",
+      "x": 640, "y": 320,
+      "width": 320, "height": 56
+    },
+    {
+      "id": "residual_label_1",
+      "label": "+",
+      "role": "neutral",
+      "shape": "circle",
+      "x": 1040, "y": 740,
+      "width": 36, "height": 36
+    },
+    {
+      "id": "residual_label_2",
+      "label": "+",
+      "role": "neutral",
+      "shape": "circle",
+      "x": 1040, "y": 480,
+      "width": 36, "height": 36
+    }
+  ],
+  "connections": [
+    { "from": "input", "to": "self_attn" },
+    { "from": "self_attn", "to": "add_norm_1" },
+    { "from": "add_norm_1", "to": "ffn" },
+    { "from": "ffn", "to": "add_norm_2" },
+    { "from": "add_norm_2", "to": "output" },
+    { "from": "input", "to": "residual_label_1", "label": "residual", "style": "dashed" },
+    { "from": "residual_label_1", "to": "add_norm_1", "style": "dashed" },
+    { "from": "add_norm_1", "to": "residual_label_2", "label": "residual", "style": "dashed" },
+    { "from": "residual_label_2", "to": "add_norm_2", "style": "dashed" }
+  ]
+}
