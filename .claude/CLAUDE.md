@@ -11,7 +11,7 @@ Code flows forward only: `Types → Styles → Bridge → Tools → Server`
 | 1 | `src/types/` | TypeScript interfaces, Zod schemas, enums |
 | 2 | `src/styles/` | Style preset loading, StyleTokens schema, built-in presets |
 | 3 | `src/bridge/` | OmniGraffle JXA/OmniJS automation bridge |
-| 4 | `src/tools/` | MCP tool implementations (9 tools) |
+| 4 | `src/tools/` | MCP tool implementations (10 tools) |
 | 5 | `src/server/` | MCP server setup, stdio transport registration |
 
 **Backward imports are forbidden.** Layer N cannot import from Layer N+1. Tools never import from Server. Bridge never imports from Tools.
@@ -30,7 +30,16 @@ npx eslint . --fix               # Auto-fix lint issues
 
 ## Issue Tracking
 
-This project uses **GitHub Issues** for all task tracking.
+This project uses **GitHub Issues** for all task tracking. **Every piece of work must have a corresponding issue.**
+
+### Required workflow
+
+1. **Before starting work**: Create an issue (or find an existing one) for what you're about to do. Link the issue in your commit messages.
+2. **When committing**: Reference the issue number in the commit body. If the commit fully resolves the issue, close it.
+3. **After completing a task**: Verify the issue is closed. If you forgot to create one, create it retroactively and close it with a reference to the commit SHA.
+4. **Multi-commit work**: Create the issue at the start, reference it in each commit, close it when the last commit lands.
+
+### Commands
 
 ```bash
 gh issue list                              # List open issues
@@ -38,6 +47,20 @@ gh issue create --title "..." --body "..."  # Create issue
 gh issue close <number>                     # Close issue
 gh issue view <number>                      # View details
 ```
+
+### Issue body format
+
+```markdown
+## Summary
+<1-3 bullet points describing what was done or needs doing>
+
+### Details
+<Technical details, design decisions, files changed>
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+**Do not batch multiple unrelated changes into one issue.** Each distinct feature, fix, or improvement gets its own issue.
 
 ## Documentation (Progressive Disclosure)
 
@@ -93,7 +116,7 @@ Four specialized roles provide distinct perspectives, constraints, and escalatio
 /design → Design Doc → /plan → Exec Plan → Implement (TDD) → /review → Merge
 ```
 
-## The 9 MCP Tools (Spec Reference)
+## The 10 MCP Tools (Spec Reference)
 
 | # | Tool | Phase | Purpose |
 |---|------|-------|---------|
@@ -106,6 +129,7 @@ Four specialized roles provide distinct perspectives, constraints, and escalatio
 | 7 | `add_element` | Phase 2 | Add single element to frontmost canvas |
 | 8 | `extract_style_from_document` | Phase 3 | Extract style preset from existing document |
 | 9 | `apply_style_preset` | Phase 3 | Apply style preset to existing document |
+| 10 | `review_diagram` | Quality | Review rendered diagram for text overflow, overlap, contrast, consistency |
 
 ## Style System
 
@@ -114,3 +138,16 @@ Two built-in presets:
 - **`clean-academic`** — Zak Brown PyData/AnacondaCon style (white bg, minimal, technical)
 
 Style presets are JSON files in `DIAGRAMMER_PRESETS_DIR`. Each defines colors, semantic roles, typography, shapes, connectors, and layout parameters.
+
+## Diagram Review System
+
+Quality checks for rendered diagrams are configured in `review/checks.yaml`. Each check has an `id`, `severity` (error/warning/info), `type` (automated/prompt), tunable `params`, and a `prompt` template.
+
+- **Automated checks** run against the OmniGraffle readback and produce findings programmatically.
+- **Prompt-based checks** generate review prompts for Claude to evaluate visually.
+- Add new checks by editing `review/checks.yaml` (automated checks also need an implementation in `src/bridge/review.ts`).
+
+```bash
+# Run review against frontmost OmniGraffle document (via MCP or directly):
+node -e "const r = require('./dist/bridge/review.js'); ..."
+```
