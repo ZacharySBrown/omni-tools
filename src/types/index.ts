@@ -11,10 +11,17 @@ export {
   CreateDiagramInputSchema,
   ExportDiagramInputSchema,
   ListStylePresetsInputSchema,
+  ElementType,
+  ApplyStylePresetInputSchema,
+  AddElementInputSchema,
+  ExtractStyleInputSchema,
   type DiagramNode,
   type DiagramConnection,
   type CreateDiagramInput,
   type ExportDiagramInput,
   type ListStylePresetsInput,
+  type ApplyStylePresetInput,
+  type AddElementInput,
+  type ExtractStyleInput,
 } from "./diagram.js";
 export type { BridgeResult } from "./bridge.js";

@@ -92,3 +92,37 @@ export type ExportDiagramInput = z.infer<typeof ExportDiagramInputSchema>;
 
 export const ListStylePresetsInputSchema = z.object({});
 export type ListStylePresetsInput = z.infer<typeof ListStylePresetsInputSchema>;
+
+// --- Phase 2 schemas ---
+
+export const ElementType = z.enum(["shape", "line", "text_annotation"]);
+export type ElementType = z.infer<typeof ElementType>;
+
+export const ApplyStylePresetInputSchema = z.object({
+  preset_name: z.string(),
+  document_path: z.string().optional(),
+  scope: z.enum(["all_canvases", "current_canvas"]).default("current_canvas"),
+  remap_by_role: z.boolean().default(true),
+});
+export type ApplyStylePresetInput = z.infer<typeof ApplyStylePresetInputSchema>;
+
+export const AddElementInputSchema = z.object({
+  type: ElementType,
+  label: z.string().optional(),
+  role: SemanticRole.default("neutral"),
+  x: z.number(),
+  y: z.number(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+  connect_from_name: z.string().optional(),
+  connect_to_name: z.string().optional(),
+  style_preset: z.string().default("illustrated-technical"),
+});
+export type AddElementInput = z.infer<typeof AddElementInputSchema>;
+
+export const ExtractStyleInputSchema = z.object({
+  document_path: z.string().optional(),
+  output_preset_name: z.string(),
+  output_preset_path: z.string().optional(),
+});
+export type ExtractStyleInput = z.infer<typeof ExtractStyleInputSchema>;
