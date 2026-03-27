@@ -1,7 +1,7 @@
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerAllTools } from "./tools/index.js";
-import { diagramTemplates, getTemplate } from "./templates/index.js";
+import { getTemplate } from "./templates/index.js";
 
 const server = new McpServer({
   name: "diagrammer-mcp",

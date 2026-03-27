@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { StyleTokensSchema, type StyleTokens, type StyleColors } from "../types/styles.js";
+import { StyleTokensSchema, type StyleTokens } from "../types/styles.js";
 
 function getPresetsDir(): string {
   return process.env.DIAGRAMMER_PRESETS_DIR || path.join(process.cwd(), "presets");

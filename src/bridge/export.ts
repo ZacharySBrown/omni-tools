@@ -19,7 +19,7 @@ function formatToOmniGraffle(format: ExportFormat): string {
 }
 
 export function buildExportScript(opts: BuildExportScriptOptions): string {
-  const { documentPath, outputPath, format, canvasName, dpi } = opts;
+  const { documentPath, outputPath, format, canvasName, dpi: _dpi } = opts;
   const ogFormat = formatToOmniGraffle(format);
 
   return `

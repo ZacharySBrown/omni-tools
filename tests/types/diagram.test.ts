@@ -113,12 +113,12 @@ describe("CreateDiagramInputSchema", () => {
   });
 
   it("rejects diagram without title", () => {
-    const { title, ...rest } = minimalDiagram;
+    const { title: _title, ...rest } = minimalDiagram;
     expect(() => CreateDiagramInputSchema.parse(rest)).toThrow();
   });
 
   it("rejects diagram without nodes", () => {
-    const { nodes, ...rest } = minimalDiagram;
+    const { nodes: _nodes, ...rest } = minimalDiagram;
     expect(() => CreateDiagramInputSchema.parse(rest)).toThrow();
   });
 

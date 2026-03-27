@@ -1,4 +1,4 @@
-import { execFileSync, execSync } from "child_process";
+import { execFileSync } from "child_process";
 import * as fs from "fs";
 import type { BridgeResult } from "../types/bridge.js";
 

@@ -84,12 +84,12 @@ describe("StyleTokensSchema", () => {
   });
 
   it("rejects preset missing meta", () => {
-    const { meta, ...rest } = validPreset;
+    const { meta: _meta, ...rest } = validPreset;
     expect(() => StyleTokensSchema.parse(rest)).toThrow();
   });
 
   it("rejects preset missing colors", () => {
-    const { colors, ...rest } = validPreset;
+    const { colors: _colors, ...rest } = validPreset;
     expect(() => StyleTokensSchema.parse(rest)).toThrow();
   });
 
