@@ -1,5 +1,5 @@
 import { AddElementInputSchema } from "../types/diagram.js";
-import { loadPreset } from "../styles/loader.js";
+import { loadPresetWithOverrides } from "../styles/loader.js";
 import { buildAddElementScript } from "../bridge/add-element.js";
 import { runOmniJSFile } from "../bridge/execute.js";
 
@@ -12,7 +12,10 @@ export const addElementTool = {
 
   async execute(input: unknown) {
     const parsed = AddElementInputSchema.parse(input);
-    const preset = loadPreset(parsed.style_preset);
+    const preset = loadPresetWithOverrides(
+      parsed.style_preset,
+      parsed.style_overrides as Record<string, unknown> | undefined,
+    );
 
     const script = buildAddElementScript({
       type: parsed.type,

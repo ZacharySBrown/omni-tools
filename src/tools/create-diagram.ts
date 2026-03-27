@@ -1,5 +1,5 @@
 import { CreateDiagramInputSchema } from "../types/diagram.js";
-import { loadPreset } from "../styles/loader.js";
+import { loadPresetWithOverrides } from "../styles/loader.js";
 import { buildDiagramScript } from "../bridge/diagram.js";
 import { buildExportScript } from "../bridge/export.js";
 import { runOmniJSFile } from "../bridge/execute.js";
@@ -13,7 +13,10 @@ export const createDiagramTool = {
 
   async execute(input: unknown) {
     const parsed = CreateDiagramInputSchema.parse(input);
-    const preset = loadPreset(parsed.style_preset);
+    const preset = loadPresetWithOverrides(
+      parsed.style_preset,
+      parsed.style_overrides as Record<string, unknown> | undefined,
+    );
 
     const script = buildDiagramScript({
       title: parsed.title,

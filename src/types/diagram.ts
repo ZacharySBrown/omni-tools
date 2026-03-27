@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { StyleTokensSchema } from "./styles.js";
 
 export const SemanticRole = z.enum([
   "encoder",
@@ -62,6 +63,7 @@ export const NodeSchema = z.object({
   width: z.number().optional(),
   height: z.number().optional(),
   sublabel: z.string().optional(),
+  text_color: z.string().optional(),
   magnets: z.array(MagnetPoint).optional(),
   opacity: z.number().min(0).max(1).optional(),
   font_size: z.number().optional(),
@@ -88,6 +90,7 @@ export const CreateDiagramInputSchema = z.object({
   layout: LayoutType.default("auto_hierarchical"),
   canvas_type: CanvasType.default("diagram"),
   style_preset: z.string().default("illustrated-technical"),
+  style_overrides: StyleTokensSchema.deepPartial().optional(),
   output_path: z.string().optional(),
   output_format: ExportFormat.optional(),
 });
@@ -129,6 +132,7 @@ export const AddElementInputSchema = z.object({
   connect_from_name: z.string().optional(),
   connect_to_name: z.string().optional(),
   style_preset: z.string().default("illustrated-technical"),
+  style_overrides: StyleTokensSchema.deepPartial().optional(),
 });
 export type AddElementInput = z.infer<typeof AddElementInputSchema>;
 
