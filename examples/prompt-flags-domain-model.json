@@ -1,0 +1,31 @@
+{
+  "title": "prompt_flags — Domain Model",
+  "description": "Core entities and their relationships: Registry → Bucket → Prompt → Section, with Flag resolution",
+  "nodes": [
+    { "id": "registry", "label": "PromptRegistry", "role": "encoder", "shape": "rounded_rectangle", "sublabel": "Central coordinator" },
+    { "id": "bucket", "label": "Bucket", "role": "intermediate", "shape": "rounded_rectangle", "sublabel": "Named category" },
+    { "id": "prompt", "label": "Prompt", "role": "intermediate", "shape": "rounded_rectangle", "sublabel": "Logical document" },
+    { "id": "section", "label": "Section", "role": "decoder", "shape": "rounded_rectangle", "sublabel": "Atomic prompt block" },
+    { "id": "flag", "label": "Flag", "role": "attention", "shape": "rounded_rectangle", "sublabel": "Feature toggle" },
+    { "id": "overrides", "label": "FlagOverrides", "role": "attention", "shape": "rounded_rectangle", "sublabel": "3-tier chain" },
+    { "id": "resolver", "label": "Resolver", "role": "encoder", "shape": "rounded_rectangle", "sublabel": "4-tier precedence" },
+    { "id": "ordering", "label": "TopologicalSort", "role": "embedding", "shape": "rounded_rectangle", "sublabel": "Section ordering" },
+    { "id": "rendered", "label": "RenderedSection", "role": "output", "shape": "rounded_rectangle", "sublabel": "Final content" }
+  ],
+  "connections": [
+    { "from": "registry", "to": "bucket", "label": "1..*", "style": "highlight" },
+    { "from": "bucket", "to": "prompt", "label": "1..*", "style": "highlight" },
+    { "from": "prompt", "to": "section", "label": "1..*", "style": "highlight" },
+    { "from": "section", "to": "flag", "label": "gated by", "style": "default" },
+    { "from": "flag", "to": "overrides", "style": "default" },
+    { "from": "overrides", "to": "resolver", "style": "default" },
+    { "from": "resolver", "to": "section", "label": "enable/disable", "style": "dashed" },
+    { "from": "section", "to": "ordering", "label": "priority + constraints", "style": "default" },
+    { "from": "ordering", "to": "rendered", "label": "sorted output", "style": "highlight" }
+  ],
+  "layout": "auto_hierarchical",
+  "canvas_type": "diagram",
+  "style_preset": "illustrated-technical",
+  "output_path": "~/Desktop/diagrams/prompt-flags-domain-model.pdf",
+  "output_format": "pdf"
+}

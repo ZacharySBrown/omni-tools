@@ -18,7 +18,7 @@ const sampleConnections: DiagramConnection[] = [
 ];
 
 describe("buildDiagramScript", () => {
-  it("produces a string containing OmniGraffle activation", () => {
+  it("produces JXA script with OmniGraffle activation", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -31,7 +31,7 @@ describe("buildDiagramScript", () => {
     expect(script).toContain("og.activate()");
   });
 
-  it("includes hex2color helper", () => {
+  it("uses evaluateJavascript for Omni Automation", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -40,10 +40,10 @@ describe("buildDiagramScript", () => {
       canvasType: "diagram",
       preset,
     });
-    expect(script).toContain("function hex2color(hex)");
+    expect(script).toContain("evaluateJavascript");
   });
 
-  it("embeds node data as JSON", () => {
+  it("includes hexToRGB color helper in OmniJS code", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -52,12 +52,26 @@ describe("buildDiagramScript", () => {
       canvasType: "diagram",
       preset,
     });
-    expect(script).toContain('"id":"a"');
-    expect(script).toContain('"label":"Encoder"');
-    expect(script).toContain('"id":"b"');
+    expect(script).toContain("function hexToRGB(hex)");
+    expect(script).toContain("Color.RGB");
   });
 
-  it("embeds connection data as JSON", () => {
+  it("embeds node data with resolved colors", () => {
+    const script = buildDiagramScript({
+      title: "Test",
+      nodes: sampleNodes,
+      connections: sampleConnections,
+      layout: "auto_hierarchical",
+      canvasType: "diagram",
+      preset,
+    });
+    // Encoder role resolves to primary color
+    expect(script).toContain("#4A90D9");
+    // Decoder role resolves to secondary color
+    expect(script).toContain("#E87878");
+  });
+
+  it("embeds connection data", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -70,7 +84,7 @@ describe("buildDiagramScript", () => {
     expect(script).toContain('"to":"b"');
   });
 
-  it("uses diagram canvas dimensions for diagram type", () => {
+  it("passes layout type to OmniJS", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -79,36 +93,10 @@ describe("buildDiagramScript", () => {
       canvasType: "diagram",
       preset,
     });
-    expect(script).toContain("CANVAS_W = 1600");
-    expect(script).toContain("CANVAS_H = 1200");
+    expect(script).toContain('"layout":"auto_hierarchical"');
   });
 
-  it("uses slide canvas dimensions for slide type", () => {
-    const script = buildDiagramScript({
-      title: "Test",
-      nodes: sampleNodes,
-      connections: sampleConnections,
-      layout: "auto_hierarchical",
-      canvasType: "slide",
-      preset,
-    });
-    expect(script).toContain("CANVAS_W = 1920");
-    expect(script).toContain("CANVAS_H = 1080");
-  });
-
-  it("includes layout engine selection for auto layouts", () => {
-    const script = buildDiagramScript({
-      title: "Test",
-      nodes: sampleNodes,
-      connections: sampleConnections,
-      layout: "auto_force",
-      canvasType: "diagram",
-      preset,
-    });
-    expect(script).toContain("Force-directed");
-  });
-
-  it("skips layout for manual mode", () => {
+  it("passes manual layout without calling canvas.layout()", () => {
     const script = buildDiagramScript({
       title: "Test",
       nodes: sampleNodes,
@@ -117,7 +105,10 @@ describe("buildDiagramScript", () => {
       canvasType: "diagram",
       preset,
     });
-    expect(script).toContain('LAYOUT !== "manual"');
+    // Layout type is passed in the data payload
+    expect(script).toContain('"layout":"manual"');
+    // OmniJS code checks data.layout !== "manual" before calling layout()
+    expect(script).toContain('data.layout !== \\"manual\\"');
   });
 
   it("safely encodes title with special characters", () => {
@@ -129,7 +120,21 @@ describe("buildDiagramScript", () => {
       canvasType: "diagram",
       preset,
     });
-    // JSON.stringify escapes quotes properly
     expect(script).toContain('\\"Quotes\\"');
+  });
+
+  it("includes export when exportPath is set", () => {
+    const script = buildDiagramScript({
+      title: "Test",
+      nodes: sampleNodes,
+      connections: sampleConnections,
+      layout: "auto_hierarchical",
+      canvasType: "diagram",
+      preset,
+      exportPath: "/tmp/test.png",
+      exportFormat: "PNG",
+    });
+    expect(script).toContain("/tmp/test.png");
+    expect(script).toContain('"PNG"');
   });
 });

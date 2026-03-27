@@ -9,7 +9,7 @@ describe("buildExportScript", () => {
       dpi: 144,
     });
     expect(script).toContain("og.documents[0]");
-    expect(script).toContain("com.adobe.pdf");
+    expect(script).toContain('"PDF"');
     expect(script).toContain("/tmp/out.pdf");
   });
 
@@ -22,7 +22,7 @@ describe("buildExportScript", () => {
     });
     expect(script).toContain("og.open(Path");
     expect(script).toContain("/path/to/doc.graffle");
-    expect(script).toContain("public.svg-image");
+    expect(script).toContain('"SVG"');
   });
 
   it("produces correct format string for PNG", () => {
@@ -31,7 +31,7 @@ describe("buildExportScript", () => {
       format: "png",
       dpi: 300,
     });
-    expect(script).toContain("public.png");
+    expect(script).toContain('"PNG"');
   });
 
   it("produces correct format string for TIFF", () => {
@@ -40,7 +40,7 @@ describe("buildExportScript", () => {
       format: "tiff",
       dpi: 144,
     });
-    expect(script).toContain("public.tiff");
+    expect(script).toContain('"TIFF"');
   });
 
   it("includes canvas selection when canvas_name given", () => {

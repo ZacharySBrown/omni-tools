@@ -1,0 +1,24 @@
+{
+  "title": "prompt_flags — 4-Tier Flag Resolution",
+  "description": "Flag resolution precedence: Runtime > Prompt > Bucket > Global Default",
+  "nodes": [
+    { "id": "runtime", "label": "Runtime Override", "role": "attention", "shape": "rounded_rectangle", "sublabel": "Highest priority" },
+    { "id": "prompt_level", "label": "Prompt-Level Override", "role": "decoder", "shape": "rounded_rectangle", "sublabel": "Per-prompt config" },
+    { "id": "bucket_level", "label": "Bucket-Level Override", "role": "intermediate", "shape": "rounded_rectangle", "sublabel": "Per-bucket config" },
+    { "id": "global_default", "label": "Global Default", "role": "input", "shape": "rounded_rectangle", "sublabel": "Flag definition" },
+    { "id": "resolver", "label": "Resolver", "role": "encoder", "shape": "rounded_rectangle", "sublabel": "Walks tiers top-down" },
+    { "id": "flag_result", "label": "FlagResult", "role": "output", "shape": "rounded_rectangle", "sublabel": "value + source tier" }
+  ],
+  "connections": [
+    { "from": "runtime", "to": "resolver", "label": "tier 1", "style": "highlight" },
+    { "from": "prompt_level", "to": "resolver", "label": "tier 2", "style": "default" },
+    { "from": "bucket_level", "to": "resolver", "label": "tier 3", "style": "default" },
+    { "from": "global_default", "to": "resolver", "label": "tier 4", "style": "dashed" },
+    { "from": "resolver", "to": "flag_result", "label": "resolved", "style": "highlight" }
+  ],
+  "layout": "auto_hierarchical",
+  "canvas_type": "diagram",
+  "style_preset": "clean-academic",
+  "output_path": "~/Desktop/diagrams/prompt-flags-flag-resolution.pdf",
+  "output_format": "pdf"
+}

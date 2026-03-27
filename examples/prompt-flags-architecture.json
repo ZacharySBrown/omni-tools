@@ -1,0 +1,28 @@
+{
+  "title": "prompt_flags — Package Architecture",
+  "description": "5-package dependency flow with cross-cutting plugin system",
+  "nodes": [
+    { "id": "core", "label": "core", "role": "encoder", "shape": "rounded_rectangle", "sublabel": "Models, Registry, Resolver, Ordering" },
+    { "id": "config", "label": "config", "role": "intermediate", "shape": "rounded_rectangle", "sublabel": "YAML Loader, Schema, Defaults" },
+    { "id": "rendering", "label": "rendering", "role": "decoder", "shape": "rounded_rectangle", "sublabel": "Jinja2 Engine, Extensions, Filters" },
+    { "id": "api", "label": "api", "role": "output", "shape": "rounded_rectangle", "sublabel": "Builder, Decorators, Functional" },
+    { "id": "plugins", "label": "plugins", "role": "attention", "shape": "rounded_rectangle", "sublabel": "Protocols, Hookspecs, Manager" },
+    { "id": "bundled", "label": "_bundled", "role": "neutral", "shape": "rounded_rectangle", "sublabel": "Default Jinja2 Macros" }
+  ],
+  "connections": [
+    { "from": "core", "to": "config", "style": "highlight", "label": "models" },
+    { "from": "config", "to": "rendering", "style": "default", "label": "loader" },
+    { "from": "core", "to": "rendering", "style": "default", "label": "registry" },
+    { "from": "core", "to": "api", "style": "default" },
+    { "from": "config", "to": "api", "style": "default" },
+    { "from": "rendering", "to": "api", "style": "highlight", "label": "public interface" },
+    { "from": "plugins", "to": "core", "style": "dashed", "label": "protocols" },
+    { "from": "plugins", "to": "rendering", "style": "dashed", "label": "hooks" },
+    { "from": "bundled", "to": "rendering", "style": "dashed", "label": "templates" }
+  ],
+  "layout": "auto_hierarchical",
+  "canvas_type": "diagram",
+  "style_preset": "illustrated-technical",
+  "output_path": "~/Desktop/diagrams/prompt-flags-architecture.pdf",
+  "output_format": "pdf"
+}

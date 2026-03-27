@@ -10,10 +10,10 @@ export interface BuildExportScriptOptions {
 
 function formatToOmniGraffle(format: ExportFormat): string {
   const map: Record<ExportFormat, string> = {
-    pdf: "com.adobe.pdf",
-    svg: "public.svg-image",
-    png: "public.png",
-    tiff: "public.tiff",
+    pdf: "PDF",
+    svg: "SVG",
+    png: "PNG",
+    tiff: "TIFF",
   };
   return map[format];
 }

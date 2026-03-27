@@ -1,0 +1,33 @@
+{
+  "title": "prompt_flags — Render Pipeline",
+  "description": "End-to-end flow from YAML config or PromptBuilder to rendered output",
+  "nodes": [
+    { "id": "yaml_input", "label": "YAML Config", "role": "input", "shape": "rounded_rectangle" },
+    { "id": "builder_input", "label": "PromptBuilder", "role": "input", "shape": "rounded_rectangle" },
+    { "id": "config_loader", "label": "Config Loader", "role": "intermediate", "shape": "rounded_rectangle", "sublabel": "Schema validation" },
+    { "id": "registry", "label": "PromptRegistry", "role": "encoder", "shape": "rounded_rectangle", "sublabel": "Central state" },
+    { "id": "flag_resolve", "label": "Flag Resolution", "role": "attention", "shape": "rounded_rectangle", "sublabel": "4-tier precedence" },
+    { "id": "section_filter", "label": "Section Filtering", "role": "decoder", "shape": "rounded_rectangle", "sublabel": "Enable/disable by flags" },
+    { "id": "topo_sort", "label": "Topological Sort", "role": "embedding", "shape": "rounded_rectangle", "sublabel": "Priority + constraints" },
+    { "id": "jinja_render", "label": "Jinja2 Render", "role": "decoder", "shape": "rounded_rectangle", "sublabel": "Templates + filters" },
+    { "id": "plugin_hooks", "label": "Plugin Hooks", "role": "attention", "shape": "pill", "sublabel": "pre/post render" },
+    { "id": "output", "label": "Rendered Prompt", "role": "output", "shape": "rounded_rectangle", "sublabel": "Final string" }
+  ],
+  "connections": [
+    { "from": "yaml_input", "to": "config_loader", "style": "default" },
+    { "from": "builder_input", "to": "registry", "style": "default" },
+    { "from": "config_loader", "to": "registry", "style": "highlight" },
+    { "from": "registry", "to": "flag_resolve", "style": "highlight" },
+    { "from": "flag_resolve", "to": "section_filter", "style": "default" },
+    { "from": "section_filter", "to": "topo_sort", "style": "default" },
+    { "from": "topo_sort", "to": "jinja_render", "style": "highlight" },
+    { "from": "jinja_render", "to": "output", "style": "highlight" },
+    { "from": "plugin_hooks", "to": "jinja_render", "style": "dashed", "label": "hooks" },
+    { "from": "plugin_hooks", "to": "section_filter", "style": "dashed", "label": "FlagSource" }
+  ],
+  "layout": "auto_hierarchical",
+  "canvas_type": "diagram",
+  "style_preset": "illustrated-technical",
+  "output_path": "~/Desktop/diagrams/prompt-flags-render-pipeline.pdf",
+  "output_format": "pdf"
+}

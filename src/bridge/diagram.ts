@@ -1,6 +1,5 @@
 import type { StyleTokens } from "../types/styles.js";
 import type { DiagramNode, DiagramConnection, LayoutType, CanvasType } from "../types/diagram.js";
-import { JXA_HELPERS } from "./jxa-helpers.js";
 
 export interface BuildDiagramScriptOptions {
   title: string;
@@ -9,121 +8,167 @@ export interface BuildDiagramScriptOptions {
   layout: LayoutType;
   canvasType: CanvasType;
   preset: StyleTokens;
+  exportPath?: string;
+  exportFormat?: string;
 }
 
+/**
+ * Build a JXA script that creates an OmniGraffle diagram.
+ *
+ * Strategy: JXA creates the document, then evaluateJavascript() runs
+ * Omni Automation code inside OmniGraffle to create shapes and connections.
+ * This is the only reliable way to set colors and connect shapes.
+ */
 export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
-  const { title, nodes, connections, layout, canvasType, preset } = opts;
+  const { title, nodes, connections, layout, preset } = opts;
 
-  const canvasW = canvasType === "slide"
-    ? preset.layout.canvas_width_slide
-    : preset.layout.canvas_width_diagram;
-  const canvasH = canvasType === "slide"
-    ? preset.layout.canvas_height_slide
-    : preset.layout.canvas_height_diagram;
+  // Pre-resolve colors in TypeScript so OmniJS only needs hex→Color.RGB
+  const nodeData = nodes.map((n) => {
+    const roleMap = preset.semantic_roles as Record<string, string>;
+    const colorKey = roleMap[n.role] ?? "surface";
+    const colors = preset.colors as Record<string, string>;
+    const fillHex = n.color_override ?? colors[colorKey] ?? preset.colors.surface;
+    const darkRoles = ["encoder", "decoder", "attention", "output"];
+    const textHex = darkRoles.includes(n.role)
+      ? preset.colors.text_on_primary
+      : preset.colors.text_primary;
 
-  // Safely inject data as JSON.parse'd strings — no template interpolation of user content
-  const presetJson = JSON.stringify(preset);
-  const nodesJson = JSON.stringify(nodes);
-  const connectionsJson = JSON.stringify(connections);
+    return {
+      id: n.id,
+      label: n.sublabel ? `${n.label}\n${n.sublabel}` : n.label,
+      shape: n.shape,
+      x: n.x,
+      y: n.y,
+      w: n.width ?? preset.shapes.min_node_width,
+      h: n.height ?? preset.shapes.min_node_height,
+      fillHex,
+      textHex,
+      cornerRadius: (n.shape === "pill" || n.shape === "token_cell")
+        ? preset.shapes.pill_corner_radius
+        : preset.shapes.node_corner_radius,
+    };
+  });
+
+  const connData = connections.map((c) => ({
+    from: c.from,
+    to: c.to,
+    label: c.label,
+    style: c.style,
+    colorHex: c.color_override
+      ?? (c.style === "highlight" ? preset.colors.connector_highlight : preset.colors.connector),
+    width: c.style === "highlight"
+      ? preset.connectors.default_width * 1.5
+      : preset.connectors.default_width,
+  }));
+
+  const omniPayload = JSON.stringify({
+    title,
+    layout,
+    nodes: nodeData,
+    conns: connData,
+    font: preset.typography.label_font,
+    textSize: preset.typography.sizes.md,
+    arrowStyle: preset.connectors.arrow_style,
+  });
+
+  // This function runs INSIDE OmniGraffle via evaluateJavascript
+  const omniFunc = `function(data) {
+  var canvas = (document.windows.length > 0 && document.windows[0].selection)
+    ? document.windows[0].selection.canvas
+    : null;
+  if (!canvas) canvas = document.portfolio.canvases[0];
+  canvas.name = data.title;
+
+  function hexToRGB(hex) {
+    var r = parseInt(hex.slice(1,3), 16) / 255;
+    var g = parseInt(hex.slice(3,5), 16) / 255;
+    var b = parseInt(hex.slice(5,7), 16) / 255;
+    return Color.RGB(r, g, b, 1);
+  }
+
+  var ogShapeMap = {
+    "rectangle": "Rectangle",
+    "rounded_rectangle": "RoundedRectangle",
+    "diamond": "Diamond",
+    "circle": "Circle",
+    "token_cell": "RoundedRectangle",
+    "pill": "RoundedRectangle",
+    "annotation": "Rectangle"
+  };
+
+  var shapes = {};
+  var cols = Math.ceil(Math.sqrt(data.nodes.length));
+
+  for (var i = 0; i < data.nodes.length; i++) {
+    var n = data.nodes[i];
+    var defaultX = 50 + (i % cols) * (n.w + 80);
+    var defaultY = 50 + Math.floor(i / cols) * (n.h + 100);
+    var x = (n.x !== undefined && n.x !== null) ? n.x : defaultX;
+    var y = (n.y !== undefined && n.y !== null) ? n.y : defaultY;
+
+    var shapeName = ogShapeMap[n.shape] || "RoundedRectangle";
+    var shape = canvas.addShape(shapeName, new Rect(x, y, n.w, n.h));
+    shape.name = n.id;
+    shape.text = n.label;
+    shape.fillColor = hexToRGB(n.fillHex);
+    shape.strokeColor = hexToRGB(n.fillHex);
+    shape.strokeThickness = 0;
+    shape.shadowColor = null;
+    shape.cornerRadius = n.cornerRadius;
+    shape.fontName = data.font;
+    shape.textSize = data.textSize;
+    shape.textColor = hexToRGB(n.textHex);
+    shape.textHorizontalAlignment = HorizontalTextAlignment.Center;
+    shape.textVerticalPlacement = VerticalTextPlacement.Middle;
+
+    shapes[n.id] = shape;
+  }
+
+  for (var c = 0; c < data.conns.length; c++) {
+    var conn = data.conns[c];
+    var src = shapes[conn.from];
+    var dst = shapes[conn.to];
+    if (!src || !dst) continue;
+
+    var line = canvas.connect(src, dst);
+    line.strokeColor = hexToRGB(conn.colorHex);
+    line.strokeThickness = conn.width;
+    line.headType = data.arrowStyle;
+    line.tailType = (conn.style === "bidirectional") ? data.arrowStyle : "";
+    line.lineType = LineType.Orthogonal;
+    line.shadowColor = null;
+
+    if (conn.style === "dashed") {
+      try { line.strokePattern = StrokeDash.Dot3; } catch(e) {}
+    }
+  }
+
+  if (data.layout !== "manual") {
+    canvas.layout();
+  }
+
+  return "created:" + data.nodes.length + ":" + data.conns.length;
+}`;
 
   return `
 var og = Application("OmniGraffle");
 og.activate();
+delay(0.5);
+og.Document().make();
+delay(1);
 
-var PRESET = ${presetJson};
-var NODES = ${nodesJson};
-var CONNECTIONS = ${connectionsJson};
-var TITLE = ${JSON.stringify(title)};
-var LAYOUT = ${JSON.stringify(layout)};
-var CANVAS_W = ${canvasW};
-var CANVAS_H = ${canvasH};
+var data = ${omniPayload};
+var result = og.evaluateJavascript("(" + ${JSON.stringify(omniFunc)} + ")(" + JSON.stringify(data) + ")");
 
-${JXA_HELPERS}
-
-// --- Create document ---
-var doc = og.Document.make();
-var canvas = doc.canvases[0];
-canvas.name = TITLE;
-canvas.canvasSize = { width: CANVAS_W, height: CANVAS_H };
-canvas.background = { color: hex2color(PRESET.colors.background) };
-
-// --- Draw nodes ---
-var shapeMap = {};
-NODES.forEach(function(node) {
-  var fill = node.color_override || roleToFillHex(node.role, PRESET);
-  var textColor = roleToTextHex(node.role, PRESET);
-  var w = node.width || PRESET.shapes.min_node_width;
-  var h = node.height || PRESET.shapes.min_node_height;
-  var x = node.x || 100;
-  var y = node.y || 100;
-
-  var s = og.Shape({ within: canvas });
-  s.geometry = { x: x, y: y, width: w, height: h };
-
-  if (node.shape === "diamond") {
-    s.shape = "Diamond";
-  } else if (node.shape === "circle") {
-    s.shape = "Circle";
-  } else {
-    s.shape = "Rectangle";
-  }
-
-  s.fillColor = hex2color(fill);
-  s.strokeColor = hex2color(fill);
-  s.strokeThickness = PRESET.shapes.stroke_width_default;
-
-  if (node.shape === "pill" || node.shape === "token_cell") {
-    s.cornerRadius = PRESET.shapes.pill_corner_radius;
-  } else {
-    s.cornerRadius = PRESET.shapes.node_corner_radius;
-  }
-
-  s.text = node.label;
-  s.textColor = hex2color(textColor);
-  s.textSize = PRESET.typography.sizes.md;
-  s.font = PRESET.typography.label_font;
-  s.textHorizontalAlignment = "center";
-  s.textVerticalPlacement = "middle";
-  s.name = node.id;
-
-  shapeMap[node.id] = s;
+${opts.exportPath ? `
+delay(0.5);
+og.documents[0].save({
+  in: Path(${JSON.stringify(opts.exportPath)}),
+  as: ${JSON.stringify(opts.exportFormat ?? "PNG")}
 });
+result = result + "|exported";
+` : ""}
 
-// --- Draw connections ---
-CONNECTIONS.forEach(function(conn) {
-  var src = shapeMap[conn.from];
-  var dst = shapeMap[conn.to];
-  if (!src || !dst) return;
-
-  var line = og.Line({ within: canvas });
-  line.pointList = [src.geometry, dst.geometry];
-  line.source = src;
-  line.destination = dst;
-
-  var strokeHex = conn.color_override ||
-    (conn.style === "highlight" ? PRESET.colors.connector_highlight : PRESET.colors.connector);
-  line.strokeColor = hex2color(strokeHex);
-  line.strokeThickness = (conn.style === "highlight")
-    ? PRESET.connectors.default_width * 1.5
-    : PRESET.connectors.default_width;
-  line.headType = PRESET.connectors.arrow_style;
-  line.tailType = (conn.style === "bidirectional") ? PRESET.connectors.arrow_style : "";
-  line.lineType = PRESET.connectors.routing;
-
-  if (conn.label) {
-    line.text = conn.label;
-    line.textSize = PRESET.connectors.label_font_size;
-  }
-});
-
-// --- Auto layout ---
-if (LAYOUT !== "manual") {
-  var layoutEngine = (LAYOUT === "auto_force") ? "Force-directed" :
-                     (LAYOUT === "auto_circular") ? "Circular" : "Hierarchical";
-  canvas.layoutInfo = { type: layoutEngine };
-  canvas.layout();
-}
-
-"done";
+result;
 `;
 }
