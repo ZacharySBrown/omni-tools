@@ -156,6 +156,74 @@ describe("checkThinStrokes", () => {
   });
 });
 
+describe("fixTextOverflow integration", () => {
+  it("checkTextOverflow findings contain data needed for fixTextOverflow", () => {
+    const shape = makeShape({
+      name: "base_lm",
+      text: "AutoModelForCausalLM",
+      geometry: { x: 0, y: 0, width: 120, height: 60 },
+      textStyle: { fontName: "Helvetica", textSize: 20, textColor: "#000" },
+    });
+    const findings = checkTextOverflow([shape]);
+    expect(findings).toHaveLength(1);
+    expect(findings[0].shapeName).toBe("base_lm");
+    expect(findings[0].details).toBeDefined();
+    expect(findings[0].details!.estWidth).toBeGreaterThan(120);
+    expect(findings[0].details!.shapeWidth).toBe(120);
+  });
+
+  it("findings for multi-line text use longest line for width estimate", () => {
+    const shape = makeShape({
+      name: "sft_box",
+      text: "SFT\nSFTTrainer",
+      geometry: { x: 0, y: 0, width: 100, height: 80 },
+      textStyle: { fontName: "Helvetica", textSize: 20, textColor: "#000" },
+    });
+    const findings = checkTextOverflow([shape]);
+    expect(findings).toHaveLength(1);
+    // Longest line is "SFTTrainer" (10 chars), not "SFT" (3 chars)
+    const estWidth = findings[0].details!.estWidth as number;
+    const expectedForLongest = 10 * 20 * 0.6 + 32; // 152
+    expect(estWidth).toBe(expectedForLongest);
+  });
+});
+
+describe("checkShapeOverlap with fix data", () => {
+  it("findings identify the smaller shape as the mover", () => {
+    const small = makeShape({ name: "label", geometry: { x: 90, y: 10, width: 60, height: 30 } });
+    const big = makeShape({ name: "box", geometry: { x: 100, y: 0, width: 200, height: 80 } });
+    const findings = checkShapeOverlap([small, big]);
+    expect(findings).toHaveLength(1);
+    expect(findings[0].shapeName).toBe("label");
+    expect(findings[0].details!.other).toBe("box");
+    expect(findings[0].details!.moverGeo).toBeDefined();
+    expect(findings[0].details!.stayerGeo).toBeDefined();
+  });
+
+  it("includes overlap dimensions for fix calculation", () => {
+    const s1 = makeShape({ name: "a", geometry: { x: 0, y: 0, width: 100, height: 50 } });
+    const s2 = makeShape({ name: "b", geometry: { x: 80, y: 10, width: 100, height: 50 } });
+    const findings = checkShapeOverlap([s1, s2]);
+    expect(findings[0].details!.overlapX).toBe(20);
+    expect(findings[0].details!.overlapY).toBe(40);
+  });
+
+  it("detects sandwiched shape overlapping neighbors on both sides", () => {
+    // Label sandwiched between left-box and right-box on x-axis
+    const left = makeShape({ name: "left_box", geometry: { x: 0, y: 0, width: 120, height: 80 } });
+    const label = makeShape({ name: "label", geometry: { x: 100, y: 20, width: 80, height: 30 } });
+    const right = makeShape({ name: "right_box", geometry: { x: 150, y: 0, width: 120, height: 80 } });
+    const findings = checkShapeOverlap([left, label, right]);
+    // Label should overlap both boxes
+    const labelFindings = findings.filter(f => f.shapeName === "label");
+    expect(labelFindings).toHaveLength(2);
+    // One neighbor is to the left, one to the right — opposite directions
+    const others = labelFindings.map(f => f.details!.other);
+    expect(others).toContain("left_box");
+    expect(others).toContain("right_box");
+  });
+});
+
 describe("checkTextContrast", () => {
   it("passes with good contrast (dark text on light bg)", () => {
     const shape = makeShape({

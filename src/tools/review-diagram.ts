@@ -11,7 +11,10 @@ import {
   checkInconsistentFontSize,
   checkThinStrokes,
   checkTextContrast,
+  fixTextOverflow,
+  fixShapeOverlap,
   type DiagramReadback,
+  type FixApplied as BridgeFixApplied,
 } from "../bridge/review.js";
 
 interface CheckConfig {
@@ -49,7 +52,7 @@ export const reviewDiagramTool = {
     content: Array<{ type: "text"; text: string }>;
   }> {
     const args = params as unknown as ReviewDiagramInput;
-    const { checks: checkFilter, severity_filter } = args;
+    const { checks: checkFilter, severity_filter, auto_fix } = args;
     const minSeverity = severity_filter ?? "info";
     const minOrder = SEVERITY_ORDER[minSeverity];
 
@@ -85,21 +88,45 @@ export const reviewDiagramTool = {
       }
     }
 
+    // Apply auto-fixes if requested (order matters: widen first, then shift)
+    const fixes: BridgeFixApplied[] = [];
+    if (auto_fix) {
+      fixes.push(...fixTextOverflow(findings));
+      fixes.push(...fixShapeOverlap(findings, canvas.shapes));
+    }
+
+    // If fixes were applied, re-run checks to get updated findings
+    let finalFindings = findings;
+    if (fixes.length > 0) {
+      const recheck = readDiagramState();
+      const recheckCanvas = recheck.canvases[0];
+      if (recheckCanvas) {
+        const recheckFindings: ReviewFinding[] = [];
+        for (const check of activeChecks) {
+          if (SEVERITY_ORDER[check.severity] > minOrder) continue;
+          if (check.type === "automated") {
+            recheckFindings.push(...runAutomatedCheck(check, recheckCanvas));
+          }
+        }
+        finalFindings = recheckFindings;
+      }
+    }
+
     const result: ReviewResult = {
       diagramTitle: readback.document.name,
       canvasName: canvas.name,
       shapeCount: canvas.shapes.length,
       lineCount: canvas.lines.length,
-      findings: findings.filter(f => SEVERITY_ORDER[f.severity] <= minOrder),
+      findings: finalFindings.filter(f => SEVERITY_ORDER[f.severity] <= minOrder),
       prompts,
       summary: {
-        errors: findings.filter(f => f.severity === "error").length,
-        warnings: findings.filter(f => f.severity === "warning").length,
-        infos: findings.filter(f => f.severity === "info").length,
+        errors: finalFindings.filter(f => f.severity === "error").length,
+        warnings: finalFindings.filter(f => f.severity === "warning").length,
+        infos: finalFindings.filter(f => f.severity === "info").length,
       },
     };
 
-    const output = formatReviewOutput(result);
+    const output = formatReviewOutput(result, fixes);
     return { content: [{ type: "text", text: output }] };
   },
 };
@@ -145,17 +172,40 @@ function interpolatePrompt(
   return result;
 }
 
-function formatReviewOutput(result: ReviewResult): string {
+function formatReviewOutput(result: ReviewResult, fixes: BridgeFixApplied[] = []): string {
   const lines: string[] = [];
   lines.push(`## Diagram Review: ${result.canvasName}`);
   lines.push(`Shapes: ${result.shapeCount} | Lines: ${result.lineCount}`);
   lines.push("");
 
+  const applied = fixes.filter(f => f.after && Object.keys(f.after).length > 0);
+  const escalations = fixes.filter(f => !f.after || Object.keys(f.after).length === 0);
+
+  if (applied.length > 0) {
+    lines.push(`### Auto-Fixed: ${applied.length} issue(s)`);
+    for (const fix of applied) {
+      lines.push(`- **${fix.shapeName}**: ${fix.description}`);
+    }
+    lines.push("");
+  }
+
+  if (escalations.length > 0) {
+    lines.push(`### Needs Spec Change: ${escalations.length} issue(s)`);
+    for (const e of escalations) {
+      lines.push(`- **${e.shapeName}**: ${e.description}`);
+    }
+    lines.push("");
+  }
+
   const { errors, warnings, infos } = result.summary;
   if (errors === 0 && warnings === 0) {
-    lines.push("All automated checks passed.");
+    if (fixes.length > 0) {
+      lines.push("All issues resolved after auto-fix.");
+    } else {
+      lines.push("All automated checks passed.");
+    }
   } else {
-    lines.push(`Found: ${errors} error(s), ${warnings} warning(s), ${infos} info(s)`);
+    lines.push(`Remaining: ${errors} error(s), ${warnings} warning(s), ${infos} info(s)`);
   }
   lines.push("");
 

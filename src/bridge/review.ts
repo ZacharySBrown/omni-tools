@@ -1,7 +1,7 @@
 import { runOmniJS } from "./execute.js";
 import type { ReviewFinding } from "../types/review.js";
 
-interface ReadbackShape {
+export interface ReadbackShape {
   id: string;
   name: string;
   text: string;
@@ -19,7 +19,7 @@ interface ReadbackShape {
   };
 }
 
-interface ReadbackLine {
+export interface ReadbackLine {
   id: string;
   source: string | null;
   destination: string | null;
@@ -190,12 +190,22 @@ export function checkShapeOverlap(
       const overlapX = Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x));
       const overlapY = Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y));
       if (overlapX > minOverlapPx && overlapY > minOverlapPx) {
+        const aArea = a.width * a.height;
+        const bArea = b.width * b.height;
+        // The smaller shape is the one to move
+        const mover = aArea <= bArea ? nonContainers[i] : nonContainers[j];
+        const stayer = aArea <= bArea ? nonContainers[j] : nonContainers[i];
         findings.push({
           checkId: "shape_overlap",
           severity: "warning",
           message: `"${nonContainers[i].name}" and "${nonContainers[j].name}" overlap by ${overlapX}×${overlapY}px`,
-          shapeName: nonContainers[i].name,
-          details: { other: nonContainers[j].name, overlapX, overlapY },
+          shapeName: mover.name,
+          details: {
+            other: stayer.name,
+            overlapX, overlapY,
+            moverGeo: mover.geometry,
+            stayerGeo: stayer.geometry,
+          },
         });
       }
     }
@@ -300,6 +310,210 @@ export function checkTextContrast(
     }
   }
   return findings;
+}
+
+// ── Auto-fix implementations ────────────────────────────────────
+
+export interface FixApplied {
+  checkId: string;
+  shapeName: string;
+  description: string;
+  before: Record<string, unknown>;
+  after: Record<string, unknown>;
+}
+
+/**
+ * Widen shapes that have text overflow findings.
+ * Returns the list of fixes applied via OmniGraffle.
+ */
+export function fixTextOverflow(
+  findings: ReviewFinding[],
+): FixApplied[] {
+  const overflowFindings = findings.filter(f => f.checkId === "text_overflow" && f.shapeName && f.details);
+  if (overflowFindings.length === 0) return [];
+
+  // Build resize commands: { shapeName, newWidth }
+  const resizes = overflowFindings.map(f => ({
+    shapeName: f.shapeName!,
+    oldWidth: (f.details as Record<string, number>).shapeWidth,
+    newWidth: Math.ceil((f.details as Record<string, number>).estWidth) + 16,
+  }));
+
+  const resizesJson = JSON.stringify(resizes);
+  const omniCode = `(function() {
+    var resizes = ${resizesJson};
+    var canvas = document.windows[0].selection.canvas;
+    if (!canvas) canvas = document.portfolio.canvases[0];
+    var applied = [];
+    for (var ri = 0; ri < resizes.length; ri++) {
+      var r = resizes[ri];
+      for (var i = 0; i < canvas.graphics.length; i++) {
+        var g = canvas.graphics[i];
+        if (g instanceof Shape && g.name === r.shapeName) {
+          var geo = g.geometry;
+          var oldW = Math.round(geo.width);
+          geo.width = r.newWidth;
+          g.geometry = geo;
+          applied.push({ shapeName: r.shapeName, oldWidth: oldW, newWidth: r.newWidth });
+          break;
+        }
+      }
+    }
+    return JSON.stringify(applied);
+  })()`;
+
+  const script = `
+var og = Application("OmniGraffle");
+og.evaluateJavascript(${JSON.stringify(omniCode)});
+`;
+  const result = runOmniJS(script);
+  if (!result.success || !result.output) {
+    return [];
+  }
+
+  const applied = JSON.parse(result.output) as Array<{ shapeName: string; oldWidth: number; newWidth: number }>;
+  return applied.map(a => ({
+    checkId: "text_overflow",
+    shapeName: a.shapeName,
+    description: `Widened shape from ${a.oldWidth}px to ${a.newWidth}px to fit text`,
+    before: { width: a.oldWidth },
+    after: { width: a.newWidth },
+  }));
+}
+
+/**
+ * Shift overlapping shapes apart. Moves the smaller shape away from the larger one
+ * along the axis with the least overlap (smallest required movement).
+ *
+ * Detects "sandwiched" shapes by simulating the proposed shift and checking if it
+ * would create a new collision with any other shape. Escalates instead of ping-ponging.
+ */
+export function fixShapeOverlap(
+  findings: ReviewFinding[],
+  allShapes: ReadbackShape[] = [],
+): FixApplied[] {
+  const overlapFindings = findings.filter(
+    f => f.checkId === "shape_overlap" && f.shapeName && f.details?.moverGeo,
+  );
+  if (overlapFindings.length === 0) return [];
+
+  const shiftMap = new Map<string, { dx: number; dy: number }>();
+  const sandwiched: FixApplied[] = [];
+  const padding = 8;
+
+  for (const f of overlapFindings) {
+    const d = f.details as Record<string, unknown>;
+    const moverGeo = d.moverGeo as { x: number; y: number; width: number; height: number };
+    const stayerGeo = d.stayerGeo as { x: number; y: number; width: number; height: number };
+    const overlapX = d.overlapX as number;
+    const overlapY = d.overlapY as number;
+    const stayerName = d.other as string;
+
+    let dx = 0;
+    let dy = 0;
+
+    if (overlapX <= overlapY) {
+      const moverCenterX = moverGeo.x + moverGeo.width / 2;
+      const stayerCenterX = stayerGeo.x + stayerGeo.width / 2;
+      dx = moverCenterX < stayerCenterX ? -(overlapX + padding) : (overlapX + padding);
+    } else {
+      const moverCenterY = moverGeo.y + moverGeo.height / 2;
+      const stayerCenterY = stayerGeo.y + stayerGeo.height / 2;
+      dy = moverCenterY < stayerCenterY ? -(overlapY + padding) : (overlapY + padding);
+    }
+
+    // Simulate: would this shift create a new collision?
+    const proposedGeo = {
+      x: moverGeo.x + dx,
+      y: moverGeo.y + dy,
+      width: moverGeo.width,
+      height: moverGeo.height,
+    };
+
+    const wouldCollide = allShapes.some(s => {
+      if (s.name === f.shapeName || s.name === stayerName) return false;
+      const area = s.geometry.width * s.geometry.height;
+      if (area >= 200000) return false; // skip containers
+      const ox = Math.max(0, Math.min(proposedGeo.x + proposedGeo.width, s.geometry.x + s.geometry.width) - Math.max(proposedGeo.x, s.geometry.x));
+      const oy = Math.max(0, Math.min(proposedGeo.y + proposedGeo.height, s.geometry.y + s.geometry.height) - Math.max(proposedGeo.y, s.geometry.y));
+      return ox > 5 && oy > 5;
+    });
+
+    if (wouldCollide) {
+      sandwiched.push({
+        checkId: "shape_overlap",
+        shapeName: f.shapeName!,
+        description: `Sandwiched between ${stayerName} and another shape — reposition in diagram spec`,
+        before: {},
+        after: {},
+      });
+      continue;
+    }
+
+    const existing = shiftMap.get(f.shapeName!);
+    if (existing) {
+      existing.dx += dx;
+      existing.dy += dy;
+    } else {
+      shiftMap.set(f.shapeName!, { dx, dy });
+    }
+  }
+
+  const shifts = Array.from(shiftMap.entries()).map(([shapeName, shift]) => ({
+    shapeName,
+    dx: shift.dx,
+    dy: shift.dy,
+  }));
+
+  const shiftsJson = JSON.stringify(shifts);
+  const omniCode = `(function() {
+    var shifts = ${shiftsJson};
+    var canvas = document.windows[0].selection.canvas;
+    if (!canvas) canvas = document.portfolio.canvases[0];
+    var applied = [];
+    for (var si = 0; si < shifts.length; si++) {
+      var s = shifts[si];
+      for (var i = 0; i < canvas.graphics.length; i++) {
+        var g = canvas.graphics[i];
+        if (g instanceof Shape && g.name === s.shapeName) {
+          var geo = g.geometry;
+          var oldX = Math.round(geo.x);
+          var oldY = Math.round(geo.y);
+          geo.x = geo.x + s.dx;
+          geo.y = geo.y + s.dy;
+          g.geometry = geo;
+          applied.push({
+            shapeName: s.shapeName,
+            oldX: oldX, oldY: oldY,
+            newX: Math.round(geo.x), newY: Math.round(geo.y)
+          });
+          break;
+        }
+      }
+    }
+    return JSON.stringify(applied);
+  })()`;
+
+  const script = `
+var og = Application("OmniGraffle");
+og.evaluateJavascript(${JSON.stringify(omniCode)});
+`;
+  const result = runOmniJS(script);
+  if (!result.success || !result.output) {
+    return [];
+  }
+
+  const applied = JSON.parse(result.output) as Array<{
+    shapeName: string; oldX: number; oldY: number; newX: number; newY: number;
+  }>;
+  const shifted = applied.map(a => ({
+    checkId: "shape_overlap",
+    shapeName: a.shapeName,
+    description: `Shifted shape from (${a.oldX}, ${a.oldY}) to (${a.newX}, ${a.newY}) to resolve overlap`,
+    before: { x: a.oldX, y: a.oldY },
+    after: { x: a.newX, y: a.newY },
+  }));
+  return [...shifted, ...sandwiched];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
