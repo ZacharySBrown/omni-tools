@@ -130,6 +130,19 @@ Four specialized roles provide distinct perspectives, constraints, and escalatio
 | 8 | `extract_style_from_document` | Phase 3 | Extract style preset from existing document |
 | 9 | `apply_style_preset` | Phase 3 | Apply style preset to existing document |
 | 10 | `review_diagram` | Quality | Review rendered diagram for text overflow, overlap, contrast, consistency |
+| 11 | `extract_diagram_spec` | Quality | Extract create_diagram-compatible spec from frontmost document for round-trip editing |
+
+## Output Directory (`save_path`)
+
+All diagram/slide creation tools accept an optional `save_path` parameter — the directory where the `.graffle` file is saved. This makes documents editable in OmniGraffle (not read-only).
+
+**Required workflow when using the diagrammer MCP tools:**
+1. **First use in a project**: Ask the user where they want generated `.graffle` files saved
+2. **Save their answer as a memory** (type: `user` or `project`) so it persists across conversations
+3. **Pass `save_path` on every `create_diagram`, `create_slide`, `create_slide_deck` call**
+4. If no `save_path` is provided, files save to `/tmp` (fallback only)
+
+The user's preferred output directory is project-specific — different repos may use different paths (e.g., `~/Documents/diagrams`, `./output`, etc.).
 
 ## Style System
 

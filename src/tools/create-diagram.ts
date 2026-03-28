@@ -25,6 +25,7 @@ export const createDiagramTool = {
       layout: parsed.layout,
       canvasType: parsed.canvas_type,
       preset,
+      savePath: parsed.save_path,
     });
 
     const result = runOmniJSFile(script);

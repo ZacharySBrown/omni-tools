@@ -1,5 +1,6 @@
 import type { StyleTokens } from "../types/styles.js";
 import type { DiagramNode, DiagramConnection, LayoutType, CanvasType } from "../types/diagram.js";
+import { emitColorHelpers, emitShapeMap, emitSyncLayout, emitCanvasFit } from "./omnijs-helpers.js";
 
 export interface BuildDiagramScriptOptions {
   title: string;
@@ -8,6 +9,7 @@ export interface BuildDiagramScriptOptions {
   layout: LayoutType;
   canvasType: CanvasType;
   preset: StyleTokens;
+  savePath?: string;
   exportPath?: string;
   exportFormat?: string;
 }
@@ -29,66 +31,48 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     const colors = preset.colors as Record<string, string>;
     const fillHex = n.color_override ?? colors[colorKey] ?? preset.colors.surface;
     const darkRoles = ["encoder", "decoder", "attention", "output"];
-    // For transparent annotations with color_override, use that color as text
-    const textHex = (n.opacity === 0 && n.color_override)
-      ? n.color_override
-      : darkRoles.includes(n.role)
-        ? preset.colors.text_on_primary
-        : preset.colors.text_primary;
+    const textHex = n.text_color
+      ?? ((n.opacity === 0 && n.color_override)
+        ? n.color_override
+        : darkRoles.includes(n.role)
+          ? preset.colors.text_on_primary
+          : preset.colors.text_primary);
 
-    // Auto-size: estimate box dimensions from label text
     const label = n.sublabel ? `${n.label}\n${n.sublabel}` : n.label;
     const lines = label.split("\n");
     const longestLine = Math.max(...lines.map(l => l.length));
     const charWidth = preset.typography.sizes.md * 0.6;
     const lineHeight = preset.typography.sizes.md * 1.6;
-    const padH = 32; // horizontal padding both sides
-    const padV = 24; // vertical padding both sides
+    const padH = 32;
+    const padV = 24;
     const autoW = Math.max(preset.shapes.min_node_width, Math.round(longestLine * charWidth + padH * 2));
     const autoH = Math.max(preset.shapes.min_node_height, Math.round(lines.length * lineHeight + padV * 2));
 
     return {
-      id: n.id,
-      label,
-      shape: n.shape,
-      x: n.x,
-      y: n.y,
-      w: n.width ?? autoW,
-      h: n.height ?? autoH,
-      fillHex,
-      strokeHex: n.stroke_color ?? null,
-      textHex,
+      id: n.id, role: n.role, label, shape: n.shape,
+      x: n.x, y: n.y, w: n.width ?? autoW, h: n.height ?? autoH,
+      fillHex, strokeHex: n.stroke_color ?? null, textHex,
       cornerRadius: (n.shape === "pill" || n.shape === "token_cell")
         ? preset.shapes.pill_corner_radius
         : (n.shape === "rectangle" || n.shape === "annotation")
-          ? 0
-          : preset.shapes.node_corner_radius,
-      magnets: n.magnets ?? null,
-      opacity: n.opacity ?? null,
+          ? 0 : preset.shapes.node_corner_radius,
+      magnets: n.magnets ?? null, opacity: n.opacity ?? null,
       fontSize: n.font_size ?? null,
     };
   });
 
   const connData = connections.map((c) => ({
-    from: c.from,
-    to: c.to,
-    label: c.label,
-    style: c.style,
+    from: c.from, to: c.to, label: c.label, style: c.style,
     colorHex: c.color_override
       ?? (c.style === "highlight" ? preset.colors.connector_highlight : preset.colors.connector),
     width: c.style === "highlight"
-      ? preset.connectors.default_width * 1.5
-      : preset.connectors.default_width,
-    tailMagnet: c.tail_magnet ?? null,
-    headMagnet: c.head_magnet ?? null,
+      ? preset.connectors.default_width * 1.5 : preset.connectors.default_width,
+    tailMagnet: c.tail_magnet ?? null, headMagnet: c.head_magnet ?? null,
     lineType: c.line_type ?? null,
   }));
 
   const omniPayload = JSON.stringify({
-    title,
-    layout,
-    nodes: nodeData,
-    conns: connData,
+    title, layout, nodes: nodeData, conns: connData,
     style: {
       font: preset.typography.label_font,
       headingFont: preset.typography.heading_font,
@@ -96,8 +80,7 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
       sublabelSize: preset.typography.sizes.sm,
       arrowStyle: preset.connectors.arrow_style,
       connectorRouting: preset.connectors.routing,
-      hPad: 16,
-      vPad: 12,
+      hPad: 16, vPad: 12,
       rankSep: preset.layout.node_v_spacing + 40,
       objSep: preset.layout.node_h_spacing + 20,
     },
@@ -114,30 +97,8 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
 
   var S = data.style;
 
-  function hexToRGB(hex) {
-    var r = parseInt(hex.slice(1,3), 16) / 255;
-    var g = parseInt(hex.slice(3,5), 16) / 255;
-    var b = parseInt(hex.slice(5,7), 16) / 255;
-    return Color.RGB(r, g, b, 1);
-  }
-
-  // Darken a hex color by a factor (0-1, lower = darker)
-  function darkenHex(hex, factor) {
-    var r = Math.round(parseInt(hex.slice(1,3), 16) * factor);
-    var g = Math.round(parseInt(hex.slice(3,5), 16) * factor);
-    var b = Math.round(parseInt(hex.slice(5,7), 16) * factor);
-    return Color.RGB(r/255, g/255, b/255, 1);
-  }
-
-  var ogShapeMap = {
-    "rectangle": "Rectangle",
-    "rounded_rectangle": "RoundedRectangle",
-    "diamond": "Diamond",
-    "circle": "Circle",
-    "token_cell": "RoundedRectangle",
-    "pill": "RoundedRectangle",
-    "annotation": "Rectangle"
-  };
+${emitColorHelpers()}
+${emitShapeMap()}
 
   var shapes = {};
   var cols = Math.ceil(Math.sqrt(data.nodes.length));
@@ -152,7 +113,6 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     var shapeName = ogShapeMap[n.shape] || "RoundedRectangle";
     var shape = canvas.addShape(shapeName, new Rect(x, y, n.w, n.h));
 
-    // --- Illustrated style: flat fill, subtle stroke, no shadow ---
     shape.name = n.id;
     shape.fillColor = hexToRGB(n.fillHex);
     shape.strokeColor = n.strokeHex ? hexToRGB(n.strokeHex) : darkenHex(n.fillHex, 0.75);
@@ -160,18 +120,12 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     shape.shadowColor = null;
     shape.cornerRadius = n.cornerRadius;
     if (n.opacity !== null && n.opacity !== undefined) {
-      shape.fillColor = Color.RGB(
-        parseInt(n.fillHex.slice(1,3), 16) / 255,
-        parseInt(n.fillHex.slice(3,5), 16) / 255,
-        parseInt(n.fillHex.slice(5,7), 16) / 255,
-        n.opacity
-      );
+      shape.fillColor = hexToRGBA(n.fillHex, n.opacity);
       if (n.opacity === 0) {
         shape.strokeThickness = 0;
       }
     }
 
-    // --- Text: padding, wrapping, clip to bounds ---
     shape.textHorizontalPadding = S.hPad;
     shape.textVerticalPadding = S.vPad;
     shape.textWraps = true;
@@ -181,8 +135,8 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     shape.textHorizontalAlignment = HorizontalTextAlignment.Center;
     shape.textVerticalPlacement = VerticalTextPlacement.Middle;
     shape.text = n.label;
+    shape.setUserData("role", n.role);
 
-    // --- Magnets: custom or default 4-point ---
     if (n.magnets && n.magnets.length > 0) {
       shape.magnets = [];
       for (var mi = 0; mi < n.magnets.length; mi++) {
@@ -195,7 +149,6 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     shapes[n.id] = shape;
   }
 
-  // --- Connections with smart routing ---
   for (var c = 0; c < data.conns.length; c++) {
     var conn = data.conns[c];
     var src = shapes[conn.from];
@@ -209,7 +162,6 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     line.tailType = (conn.style === "bidirectional") ? S.arrowStyle : "";
     line.shadowColor = null;
 
-    // Determine routing and magnet selection
     var srcGeo = src.geometry;
     var dstGeo = dst.geometry;
     var srcCx = srcGeo.x + srcGeo.width / 2;
@@ -219,7 +171,6 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     var adx = Math.abs(dstCx - srcCx);
     var ady = Math.abs(dstCy - srcCy);
 
-    // Explicit line type override
     if (conn.lineType === "straight") {
       line.lineType = LineType.Straight;
     } else if (conn.lineType === "curved") {
@@ -228,7 +179,6 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
       line.lineType = LineType.Orthogonal;
       line.hopType = HopType.Round;
     } else {
-      // Auto-select: straight for aligned, orthogonal for diagonal
       if (ady > adx) {
         line.lineType = (adx < 20) ? LineType.Straight : LineType.Orthogonal;
       } else {
@@ -239,8 +189,6 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
       }
     }
 
-    // Explicit magnet overrides, or auto-select based on direction
-    // Default magnets: 1=top, 2=bottom, 3=left, 4=right
     if (conn.tailMagnet !== null && conn.tailMagnet !== undefined) {
       line.tailMagnet = conn.tailMagnet;
     } else if (ady > adx) {
@@ -269,41 +217,10 @@ export function buildDiagramScript(opts: BuildDiagramScriptOptions): string {
     }
   }
 
-  // --- Auto layout with generous spacing ---
-  if (data.layout !== "manual") {
-    var layoutInfo = canvas.layoutInfo;
-    try {
-      layoutInfo.direction = HierarchicalDirection.Top;
-      layoutInfo.rankSeparation = S.rankSep;
-      layoutInfo.objectSeparation = S.objSep;
-    } catch(e) {}
-    canvas.layout();
-  }
+${emitSyncLayout()}
+${emitCanvasFit()}
 
-  // --- Fit canvas to content: shift shapes to origin + margin, then size canvas ---
-  var allGraphics = canvas.graphics;
-  var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  for (var gi = 0; gi < allGraphics.length; gi++) {
-    var geo = allGraphics[gi].geometry;
-    if (geo.x < minX) minX = geo.x;
-    if (geo.y < minY) minY = geo.y;
-    if (geo.x + geo.width > maxX) maxX = geo.x + geo.width;
-    if (geo.y + geo.height > maxY) maxY = geo.y + geo.height;
-  }
-  var pad = 60;
-  var dx = pad - minX;
-  var dy = pad - minY;
-  if (dx !== 0 || dy !== 0) {
-    for (var gi = 0; gi < allGraphics.length; gi++) {
-      var geo = allGraphics[gi].geometry;
-      allGraphics[gi].geometry = new Rect(geo.x + dx, geo.y + dy, geo.width, geo.height);
-    }
-  }
-  var contentW = (maxX - minX) + pad * 2;
-  var contentH = (maxY - minY) + pad * 2;
-  canvas.size = new Size(contentW, contentH);
-
-  return "created:" + data.nodes.length + ":" + data.conns.length;
+  return "created:" + data.nodes.length + ":" + data.conns.length + "|bbox:" + minX + "," + minY + "," + maxX + "," + maxY + "|canvas:" + contentW + "x" + contentH;
 }`;
 
   return `
@@ -315,6 +232,16 @@ delay(1);
 
 var data = ${omniPayload};
 var result = og.evaluateJavascript("(" + ${JSON.stringify(omniFunc)} + ")(" + JSON.stringify(data) + ")");
+
+// Save to disk, close untitled doc, reopen from file so it's fully editable
+delay(0.3);
+var saveDir = ${JSON.stringify(opts.savePath ?? "/tmp")};
+var savePath = saveDir + "/" + ${JSON.stringify(title.replace(/[^a-zA-Z0-9_\- ]/g, ""))} + ".graffle";
+og.documents[0].save({ in: Path(savePath) });
+delay(0.3);
+og.documents[0].close({ saving: "no" });
+delay(0.3);
+og.open(Path(savePath));
 
 ${opts.exportPath ? `
 delay(0.5);

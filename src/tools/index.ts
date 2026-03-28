@@ -15,6 +15,9 @@ import { applyStylePresetTool } from "./apply-style-preset.js";
 import { addElementTool } from "./add-element.js";
 import { extractStyleTool } from "./extract-style.js";
 import { reviewDiagramTool } from "./review-diagram.js";
+import { createSlideTool, CreateSlideInputSchema } from "./create-slide.js";
+import { createSlideDeckTool, CreateSlideDeckInputSchema } from "./create-slide-deck.js";
+import { extractDiagramSpecTool, ExtractDiagramSpecInputSchema } from "./extract-diagram-spec.js";
 
 export function registerAllTools(server: McpServer): void {
   server.tool(
@@ -64,5 +67,26 @@ export function registerAllTools(server: McpServer): void {
     reviewDiagramTool.description,
     ReviewDiagramInputSchema.shape,
     async (params) => reviewDiagramTool.execute(params as unknown as Record<string, unknown>),
+  );
+
+  server.tool(
+    createSlideTool.name,
+    createSlideTool.description,
+    CreateSlideInputSchema.shape,
+    async (params) => createSlideTool.execute(params),
+  );
+
+  server.tool(
+    createSlideDeckTool.name,
+    createSlideDeckTool.description,
+    CreateSlideDeckInputSchema.shape,
+    async (params) => createSlideDeckTool.execute(params),
+  );
+
+  server.tool(
+    extractDiagramSpecTool.name,
+    extractDiagramSpecTool.description,
+    ExtractDiagramSpecInputSchema.shape,
+    async (params) => extractDiagramSpecTool.execute(params as unknown as Record<string, unknown>),
   );
 }

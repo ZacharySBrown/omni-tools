@@ -91,6 +91,9 @@ export const CreateDiagramInputSchema = z.object({
   canvas_type: CanvasType.default("diagram"),
   style_preset: z.string().default("illustrated-technical"),
   style_overrides: StyleTokensSchema.deepPartial().optional(),
+  save_path: z.string().optional().describe(
+    "Directory to save the .graffle file. Ask the user for their preferred output directory on first use. Defaults to /tmp.",
+  ),
   output_path: z.string().optional(),
   output_format: ExportFormat.optional(),
 });

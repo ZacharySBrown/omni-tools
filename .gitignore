@@ -5,3 +5,4 @@ dist/
 .claude/sessions/
 /tmp/
 *.log
+graffles/
