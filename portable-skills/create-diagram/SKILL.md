@@ -1,3 +1,9 @@
+---
+description: Plan layout, render in OmniGraffle, auto-fix, and export a technical diagram
+user-invocable: true
+argument-hint: "what to diagram"
+---
+
 # /create-diagram — Plan and render a technical diagram
 
 ## When to use

@@ -1,3 +1,9 @@
+---
+description: Plan and render a multi-slide presentation with diagrams for each slide
+user-invocable: true
+argument-hint: "topic or repo to present"
+---
+
 # /create-slide-deck — Plan and render a multi-slide presentation
 
 ## When to use

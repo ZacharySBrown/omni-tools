@@ -1,3 +1,9 @@
+---
+description: Research a codebase, file, or concept and produce a create_diagram JSON spec with planned layout
+user-invocable: true
+argument-hint: "path or description of what to diagram"
+---
+
 # /generate-diagram-spec — Generate a create_diagram JSON spec from a codebase, file, or concept
 
 ## When to use
