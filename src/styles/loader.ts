@@ -1,11 +1,15 @@
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 import { StyleTokensSchema, type StyleTokens } from "../types/styles.js";
 import { getUserConfig } from "../config/loader.js";
 import { deepMerge } from "../config/merge.js";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 function getBuiltinPresetsDir(): string {
-  return path.join(process.cwd(), "presets");
+  // Resolve relative to the package installation, not cwd()
+  return path.resolve(__dirname, "../../presets");
 }
 
 export function getPresetsDirs(): string[] {

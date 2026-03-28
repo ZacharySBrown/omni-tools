@@ -1,6 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 import { ExtractStyleInputSchema } from "../types/diagram.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import { buildExtractStyleScript } from "../bridge/extract-style.js";
 import { buildPresetFromSamples, type ShapeSample } from "../styles/extractor.js";
 import { runOmniJSFile } from "../bridge/execute.js";
@@ -58,7 +61,7 @@ export const extractStyleTool = {
 
     const presetsDir = parsed.output_preset_path
       ?? process.env.DIAGRAMMER_PRESETS_DIR
-      ?? path.join(process.cwd(), "presets");
+      ?? path.resolve(__dirname, "../../presets");
 
     const outputPath = path.join(presetsDir, `${parsed.output_preset_name}.json`);
     fs.writeFileSync(outputPath, JSON.stringify(preset, null, 2), "utf8");

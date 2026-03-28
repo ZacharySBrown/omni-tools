@@ -1,7 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 import * as yaml from "yaml";
 import type { ReviewDiagramInput, ReviewFinding, ReviewResult, ReviewSeverity } from "../types/review.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import {
   readDiagramState,
   checkTextOverflow,
@@ -28,7 +31,7 @@ interface CheckConfig {
 }
 
 function loadChecksConfig(): CheckConfig[] {
-  const configPath = path.join(process.cwd(), "review", "checks.yaml");
+  const configPath = path.resolve(__dirname, "../../review", "checks.yaml");
   if (!fs.existsSync(configPath)) {
     throw new Error(`Review config not found at ${configPath}`);
   }
