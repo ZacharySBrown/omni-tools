@@ -96,6 +96,15 @@ These are recommendations but won't block merge:
 gh pr comment {number} --body "{review checklist from step 7}"
 ```
 
+### 9. Review Diagrams (if any OmniGraffle documents are open or were created)
+
+If the changes include diagram creation or modification:
+
+1. Run `review_diagram(auto_fix: true, severity_filter: "warning")` on each open diagram
+2. Re-run until 0 errors remain (auto-fix may need multiple passes)
+3. Escalated issues (sandwiched shapes) should be flagged as ADVISORY with spec change guidance
+4. Export all diagrams to PNG after review passes — markdown references must point to `.png` files, not `.graffle`
+
 ## Classification Rules
 
 ### CRITICAL (blocks merge)

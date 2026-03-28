@@ -144,6 +144,21 @@ All diagram/slide creation tools accept an optional `save_path` parameter — th
 
 The user's preferred output directory is project-specific — different repos may use different paths (e.g., `~/Documents/diagrams`, `./output`, etc.).
 
+## Diagram Workflow: Create → Review → Export
+
+**Every diagram must be reviewed before export.** Follow this sequence:
+
+1. **Create**: `create_diagram(save_path=...)` — generates `.graffle`
+2. **Review + Auto-Fix**: `review_diagram(auto_fix: true)` — fix text overflow, overlaps. Run multiple passes until 0 errors. Escalated issues (sandwiched shapes) require spec changes.
+3. **Export**: `export_diagram(output_path=..., format="png")` — only after review passes
+
+**Markdown rendering rules:**
+- VS Code / GitHub markdown preview cannot render `.graffle` files
+- **Always export diagrams to PNG** when they will be referenced in markdown
+- Reference the `.png` file in markdown, not the `.graffle`: `![Title](diagram-name.png)`
+- Keep both `.graffle` (editable source) and `.png` (rendered output) in the same directory
+- Use kebab-case for exported filenames: `architecture-overview.png`, not spaces
+
 ## Style System
 
 Two built-in presets:
