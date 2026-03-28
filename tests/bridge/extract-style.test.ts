@@ -12,9 +12,10 @@ describe("buildExtractStyleScript", () => {
     expect(script).toContain("cornerRadius");
   });
 
-  it("uses frontmost doc when no path given", () => {
+  it("uses evaluateJavascript with document.portfolio when no path given", () => {
     const script = buildExtractStyleScript({});
-    expect(script).toContain("og.documents[0]");
+    expect(script).toContain("evaluateJavascript");
+    expect(script).toContain("document.portfolio.canvases");
   });
 
   it("opens specific doc when path given", () => {
@@ -32,7 +33,7 @@ describe("buildExtractStyleScript", () => {
 
   it("iterates all canvases", () => {
     const script = buildExtractStyleScript({});
-    expect(script).toContain("doc.canvases()");
+    expect(script).toContain("document.portfolio.canvases");
     expect(script).toContain("canvases.length");
   });
 });

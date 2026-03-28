@@ -26,6 +26,19 @@ export {
 } from "./diagram.js";
 export type { BridgeResult } from "./bridge.js";
 export {
+  AnnotationStyle,
+  AnnotationSchema,
+  SlideOverrideSchema,
+  BaseDiagramSchema,
+  PresentationSpecInputSchema,
+  PresentationSpecSchema,
+  type Annotation,
+  type SlideOverride,
+  type PresentationSpec,
+} from "./presentation.js";
+export { CreateSlideInputSchema } from "../tools/create-slide.js";
+export { CreateSlideDeckInputSchema } from "../tools/create-slide-deck.js";
+export {
   ReviewSeverity,
   ReviewFinding,
   ReviewResult,

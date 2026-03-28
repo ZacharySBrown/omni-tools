@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "diagrammer": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "/Users/zak/zacharysbrown/omni-tools",
+      "env": {
+        "DIAGRAMMER_PRESETS_DIR": "/Users/zak/zacharysbrown/omni-tools/presets"
+      }
+    }
+  }
+}

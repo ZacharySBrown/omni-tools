@@ -1,0 +1,536 @@
+{
+  "document": {
+    "name": "Untitled"
+  },
+  "canvases": [
+    {
+      "name": "Cross-Prompt Flags",
+      "size": {
+        "width": 1020,
+        "height": 660
+      },
+      "shapes": [
+        {
+          "id": "23",
+          "name": "caption",
+          "text": "Both prompts include their reasoning sections — different text, same toggle",
+          "geometry": {
+            "x": 250,
+            "y": 572,
+            "width": 520,
+            "height": 24
+          },
+          "style": {
+            "fillColor": "#718096",
+            "strokeColor": "#556071",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#718096"
+          }
+        },
+        {
+          "id": "22",
+          "name": "r_check_json_tag",
+          "text": "always on",
+          "geometry": {
+            "x": 805,
+            "y": 482,
+            "width": 90,
+            "height": 20
+          },
+          "style": {
+            "fillColor": "#48BB78",
+            "strokeColor": "#368C5A",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 11,
+            "textColor": "#48BB78"
+          }
+        },
+        {
+          "id": "21",
+          "name": "r_check_json",
+          "text": "check_json\n\"Verify the response is valid JSON\n with required keys.\"\npriority: 20",
+          "geometry": {
+            "x": 540,
+            "y": 480,
+            "width": 365,
+            "height": 78
+          },
+          "style": {
+            "fillColor": "#1A365D",
+            "strokeColor": "#2A4A7F",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "20",
+          "name": "r_check_reasoning_tag",
+          "text": "flag: chain_of_thought",
+          "geometry": {
+            "x": 753,
+            "y": 382,
+            "width": 150,
+            "height": 20
+          },
+          "style": {
+            "fillColor": "#48BB78",
+            "strokeColor": "#368C5A",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 11,
+            "textColor": "#48BB78"
+          }
+        },
+        {
+          "id": "19",
+          "name": "r_check_reasoning",
+          "text": "check_reasoning\n\"Verify each reasoning step is\n sound and the conclusion follows.\"\npriority: 10",
+          "geometry": {
+            "x": 540,
+            "y": 380,
+            "width": 365,
+            "height": 90
+          },
+          "style": {
+            "fillColor": "#1A365D",
+            "strokeColor": "#2A4A7F",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "18",
+          "name": "r_identity_tag",
+          "text": "always on",
+          "geometry": {
+            "x": 805,
+            "y": 290,
+            "width": 90,
+            "height": 20
+          },
+          "style": {
+            "fillColor": "#48BB78",
+            "strokeColor": "#368C5A",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 11,
+            "textColor": "#48BB78"
+          }
+        },
+        {
+          "id": "17",
+          "name": "r_identity",
+          "text": "identity\n\"You are a code reviewer.\"\npriority: 1",
+          "geometry": {
+            "x": 540,
+            "y": 288,
+            "width": 365,
+            "height": 82
+          },
+          "style": {
+            "fillColor": "#1A365D",
+            "strokeColor": "#2A4A7F",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "16",
+          "name": "right_subtitle",
+          "text": "bucket: reviewer  /  prompt: code_review",
+          "geometry": {
+            "x": 540,
+            "y": 258,
+            "width": 350,
+            "height": 22
+          },
+          "style": {
+            "fillColor": "#718096",
+            "strokeColor": "#556071",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 12,
+            "textColor": "#718096"
+          }
+        },
+        {
+          "id": "15",
+          "name": "right_title",
+          "text": "Reviewer Prompt",
+          "geometry": {
+            "x": 540,
+            "y": 232,
+            "width": 250,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E2E8F0",
+            "strokeColor": "#AAAEB4",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "14",
+          "name": "right_panel",
+          "text": "",
+          "geometry": {
+            "x": 525,
+            "y": 225,
+            "width": 395,
+            "height": 340
+          },
+          "style": {
+            "fillColor": "#2D3748",
+            "strokeColor": "#4A5568",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "13",
+          "name": "l_format_tag",
+          "text": "always on",
+          "geometry": {
+            "x": 380,
+            "y": 482,
+            "width": 90,
+            "height": 20
+          },
+          "style": {
+            "fillColor": "#48BB78",
+            "strokeColor": "#368C5A",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 11,
+            "textColor": "#48BB78"
+          }
+        },
+        {
+          "id": "12",
+          "name": "l_format",
+          "text": "format\n\"Return your answer as JSON with\n keys: answer, confidence.\"\npriority: 20",
+          "geometry": {
+            "x": 115,
+            "y": 480,
+            "width": 365,
+            "height": 78
+          },
+          "style": {
+            "fillColor": "#1A365D",
+            "strokeColor": "#2A4A7F",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "11",
+          "name": "l_reasoning_tag",
+          "text": "flag: chain_of_thought",
+          "geometry": {
+            "x": 328,
+            "y": 382,
+            "width": 150,
+            "height": 20
+          },
+          "style": {
+            "fillColor": "#48BB78",
+            "strokeColor": "#368C5A",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 11,
+            "textColor": "#48BB78"
+          }
+        },
+        {
+          "id": "10",
+          "name": "l_reasoning",
+          "text": "reasoning\n\"Think step by step. Show your\n reasoning before the final answer.\"\npriority: 10",
+          "geometry": {
+            "x": 115,
+            "y": 380,
+            "width": 365,
+            "height": 90
+          },
+          "style": {
+            "fillColor": "#1A365D",
+            "strokeColor": "#2A4A7F",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "9",
+          "name": "l_identity_tag",
+          "text": "always on",
+          "geometry": {
+            "x": 380,
+            "y": 290,
+            "width": 90,
+            "height": 20
+          },
+          "style": {
+            "fillColor": "#48BB78",
+            "strokeColor": "#368C5A",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 11,
+            "textColor": "#48BB78"
+          }
+        },
+        {
+          "id": "8",
+          "name": "l_identity",
+          "text": "identity\n\"You are a coding assistant.\"\npriority: 1",
+          "geometry": {
+            "x": 115,
+            "y": 288,
+            "width": 365,
+            "height": 82
+          },
+          "style": {
+            "fillColor": "#1A365D",
+            "strokeColor": "#2A4A7F",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 13,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "7",
+          "name": "left_subtitle",
+          "text": "bucket: generator  /  prompt: coding",
+          "geometry": {
+            "x": 115,
+            "y": 258,
+            "width": 350,
+            "height": 22
+          },
+          "style": {
+            "fillColor": "#718096",
+            "strokeColor": "#556071",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 12,
+            "textColor": "#718096"
+          }
+        },
+        {
+          "id": "6",
+          "name": "left_title",
+          "text": "Generator Prompt",
+          "geometry": {
+            "x": 115,
+            "y": 232,
+            "width": 250,
+            "height": 28
+          },
+          "style": {
+            "fillColor": "#E2E8F0",
+            "strokeColor": "#AAAEB4",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 18,
+            "textColor": "#E2E8F0"
+          }
+        },
+        {
+          "id": "5",
+          "name": "left_panel",
+          "text": "",
+          "geometry": {
+            "x": 100,
+            "y": 225,
+            "width": 395,
+            "height": 340
+          },
+          "style": {
+            "fillColor": "#2D3748",
+            "strokeColor": "#4A5568",
+            "strokeThickness": 1.5,
+            "cornerRadius": 12
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        },
+        {
+          "id": "4",
+          "name": "toggle",
+          "text": "●  chain_of_thought: ON",
+          "geometry": {
+            "x": 380,
+            "y": 135,
+            "width": 260,
+            "height": 38
+          },
+          "style": {
+            "fillColor": "#38A169",
+            "strokeColor": "#2F855A",
+            "strokeThickness": 1.5,
+            "cornerRadius": 24
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 15,
+            "textColor": "#FFFFFF"
+          }
+        },
+        {
+          "id": "3",
+          "name": "title",
+          "text": "One Flag, Multiple Prompts — Coordinated Behavior",
+          "geometry": {
+            "x": 210,
+            "y": 78,
+            "width": 600,
+            "height": 40
+          },
+          "style": {
+            "fillColor": "#CBD5E0",
+            "strokeColor": "#98A0A8",
+            "strokeThickness": 0,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "HelveticaNeue",
+            "textSize": 22,
+            "textColor": "#CBD5E0"
+          }
+        },
+        {
+          "id": "2",
+          "name": "bg",
+          "text": "",
+          "geometry": {
+            "x": 60,
+            "y": 60,
+            "width": 900,
+            "height": 540
+          },
+          "style": {
+            "fillColor": "#1A202C",
+            "strokeColor": "#1A202C",
+            "strokeThickness": 1.5,
+            "cornerRadius": 0
+          },
+          "textStyle": {
+            "fontName": "Helvetica Neue",
+            "textSize": 24,
+            "textColor": "#2D3748"
+          }
+        }
+      ],
+      "lines": [
+        {
+          "id": "25",
+          "source": "right_panel",
+          "destination": "toggle",
+          "text": "",
+          "geometry": {
+            "x": 510,
+            "y": 173,
+            "width": 213,
+            "height": 52
+          },
+          "style": {
+            "strokeColor": "#A0AEC0",
+            "strokeThickness": 2,
+            "lineType": "[object LineType: Orthogonal]"
+          }
+        },
+        {
+          "id": "24",
+          "source": "left_panel",
+          "destination": "toggle",
+          "text": "",
+          "geometry": {
+            "x": 298,
+            "y": 173,
+            "width": 213,
+            "height": 52
+          },
+          "style": {
+            "strokeColor": "#A0AEC0",
+            "strokeThickness": 2,
+            "lineType": "[object LineType: Orthogonal]"
+          }
+        }
+      ]
+    }
+  ]
+}

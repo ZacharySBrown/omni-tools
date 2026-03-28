@@ -17,10 +17,11 @@ describe("buildAddElementScript", () => {
       preset,
     });
     expect(script).toContain('Application("OmniGraffle")');
-    expect(script).toContain("og.Shape");
+    expect(script).toContain("evaluateJavascript");
+    expect(script).toContain("canvas.addShape");
     expect(script).toContain("My Node");
-    expect(script).toContain("x: 100");
-    expect(script).toContain("y: 200");
+    expect(script).toContain('"x":100');
+    expect(script).toContain('"y":200');
   });
 
   it("generates line creation script with shape lookups", () => {
@@ -33,11 +34,10 @@ describe("buildAddElementScript", () => {
       connectToName: "node_b",
       preset,
     });
-    expect(script).toContain("og.Line");
+    expect(script).toContain("evaluateJavascript");
+    expect(script).toContain("canvas.connect");
     expect(script).toContain("node_a");
     expect(script).toContain("node_b");
-    expect(script).toContain("line.source");
-    expect(script).toContain("line.destination");
   });
 
   it("generates text annotation script", () => {
@@ -50,8 +50,8 @@ describe("buildAddElementScript", () => {
       preset,
     });
     expect(script).toContain("Note: important");
-    expect(script).toContain("text_secondary");
-    expect(script).toContain("x: 50");
+    expect(script).toContain('"textColor"');
+    expect(script).toContain('"x":50');
   });
 
   it("uses preset min dimensions for shapes without explicit size", () => {
@@ -62,8 +62,8 @@ describe("buildAddElementScript", () => {
       y: 0,
       preset,
     });
-    expect(script).toContain(`width: ${preset.shapes.min_node_width}`);
-    expect(script).toContain(`height: ${preset.shapes.min_node_height}`);
+    expect(script).toContain(`"w":${preset.shapes.min_node_width}`);
+    expect(script).toContain(`"h":${preset.shapes.min_node_height}`);
   });
 
   it("uses explicit dimensions when provided", () => {
@@ -76,7 +76,7 @@ describe("buildAddElementScript", () => {
       height: 100,
       preset,
     });
-    expect(script).toContain("width: 300");
-    expect(script).toContain("height: 100");
+    expect(script).toContain('"w":300');
+    expect(script).toContain('"h":100');
   });
 });

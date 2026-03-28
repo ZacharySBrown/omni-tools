@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "name": "extracted-e2e-test",
+    "description": "Extracted from OmniGraffle document (4 shapes sampled)",
+    "version": "1.0.0"
+  },
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#F0F4FF",
+    "surface_alt": "#FFF0F5",
+    "primary": "#48BB78",
+    "secondary": "#ED8936",
+    "accent": "#4299E1",
+    "accent_warm": "#2D3748",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#E2E8F0",
+    "text_on_primary": "#FFFFFF",
+    "text_on_secondary": "#FFFFFF",
+    "connector": "#368C5A",
+    "connector_highlight": "#2D3748",
+    "code_bg": "#F7F8FA",
+    "code_text": "#2D3748",
+    "border": "#E2E8F0",
+    "success": "#48BB78",
+    "warning": "#ED8936",
+    "danger": "#FC8181"
+  },
+  "semantic_roles": {
+    "encoder": "primary",
+    "decoder": "secondary",
+    "attention": "accent_warm",
+    "embedding": "accent",
+    "output": "success",
+    "input": "surface",
+    "intermediate": "surface_alt"
+  },
+  "typography": {
+    "heading_font": "HelveticaNeue",
+    "body_font": "HelveticaNeue",
+    "code_font": "Menlo",
+    "label_font": "HelveticaNeue",
+    "sizes": {
+      "xxl": 72,
+      "xl": 48,
+      "lg": 33,
+      "md": 24,
+      "sm": 18,
+      "xs": 15,
+      "code": 20
+    },
+    "weights": {
+      "title": "Bold",
+      "label": "Medium",
+      "annotation": "Regular"
+    }
+  },
+  "shapes": {
+    "default_corner_radius": 12,
+    "node_corner_radius": 12,
+    "pill_corner_radius": 30,
+    "stroke_width_default": 1.5,
+    "stroke_width_emphasis": 2.505,
+    "stroke_width_subtle": 0.495,
+    "min_node_width": 120,
+    "min_node_height": 48,
+    "token_cell_width": 80,
+    "token_cell_height": 40,
+    "shadow": false,
+    "shadow_blur": 0,
+    "shadow_offset_x": 0,
+    "shadow_offset_y": 0,
+    "shadow_color": "#00000020"
+  },
+  "connectors": {
+    "default_stroke": "#368C5A",
+    "default_width": 1.5,
+    "arrow_style": "FilledArrow",
+    "routing": "orthogonal",
+    "label_font_size": 17
+  },
+  "layout": {
+    "canvas_width_slide": 1920,
+    "canvas_height_slide": 1080,
+    "canvas_width_diagram": 1600,
+    "canvas_height_diagram": 1200,
+    "margin": 80,
+    "node_h_spacing": 60,
+    "node_v_spacing": 40,
+    "title_margin_top": 60,
+    "content_margin_top": 140
+  }
+}

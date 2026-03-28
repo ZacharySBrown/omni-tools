@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 //
-// compare-snapshots.js — Compare two readback snapshots and report diffs
+// compare-snapshots.cjs — Compare two readback snapshots and report diffs
 // in geometry, colors, and structure.
 //
 // Usage:
-//   node compare-snapshots.js snapshots/01-baseline.json snapshots/01-current.json
-//   node compare-snapshots.js snapshots/01-baseline.json snapshots/01-current.json --tolerance 5
+//   node compare-snapshots.cjs snapshots/01-baseline.json snapshots/01-current.json
+//   node compare-snapshots.cjs snapshots/01-baseline.json snapshots/01-current.json --tolerance 5
 //
 
 const fs = require("fs");
@@ -14,7 +14,7 @@ const path = require("path");
 const args = process.argv.slice(2);
 if (args.length < 2) {
   console.error(
-    "Usage: node compare-snapshots.js <baseline.json> <current.json> [--tolerance N]"
+    "Usage: node compare-snapshots.cjs <baseline.json> <current.json> [--tolerance N]"
   );
   process.exit(1);
 }

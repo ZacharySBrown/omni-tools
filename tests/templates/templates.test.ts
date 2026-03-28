@@ -65,3 +65,57 @@ describe("listTemplates", () => {
     }
   });
 });
+
+describe("MCP resource handler (template://diagram/{name})", () => {
+  // Simulates what src/index.ts resource handler does
+  function handleResourceRequest(name: string) {
+    const template = getTemplate(name);
+    if (!template) {
+      throw new Error(`Template not found: ${name}`);
+    }
+    return {
+      contents: [
+        {
+          uri: `template://diagram/${name}`,
+          mimeType: "application/json",
+          text: JSON.stringify(template, null, 2),
+        },
+      ],
+    };
+  }
+
+  it("returns valid JSON for each template name", () => {
+    for (const t of diagramTemplates) {
+      const result = handleResourceRequest(t.name);
+      expect(result.contents).toHaveLength(1);
+      expect(result.contents[0].mimeType).toBe("application/json");
+      const parsed = JSON.parse(result.contents[0].text);
+      expect(parsed.name).toBe(t.name);
+      expect(parsed.nodes.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("URI matches requested template", () => {
+    const result = handleResourceRequest("pipeline-dag");
+    expect(result.contents[0].uri).toBe("template://diagram/pipeline-dag");
+  });
+
+  it("throws for unknown template name", () => {
+    expect(() => handleResourceRequest("nonexistent")).toThrow("Template not found: nonexistent");
+  });
+
+  it("serialized template round-trips through JSON", () => {
+    for (const t of diagramTemplates) {
+      const result = handleResourceRequest(t.name);
+      const parsed = JSON.parse(result.contents[0].text);
+      // Verify nodes survive serialization
+      for (const node of parsed.nodes) {
+        expect(() => NodeSchema.parse(node)).not.toThrow();
+      }
+      // Verify connections survive serialization
+      for (const conn of parsed.connections) {
+        expect(() => ConnectionSchema.parse(conn)).not.toThrow();
+      }
+    }
+  });
+});

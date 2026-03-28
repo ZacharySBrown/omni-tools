@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "name": "zak-talk-style",
+    "description": "Extracted from OmniGraffle document (200 shapes sampled)",
+    "version": "1.0.0"
+  },
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#F0F4FF",
+    "surface_alt": "#FFF0F5",
+    "primary": "#FFFFFF",
+    "secondary": "#E87878",
+    "accent": "#68C3A3",
+    "accent_warm": "#F5A623",
+    "text_primary": "#000000",
+    "text_secondary": "#6B7280",
+    "text_on_primary": "#FFFFFF",
+    "text_on_secondary": "#FFFFFF",
+    "connector": "#000000",
+    "connector_highlight": "#F5A623",
+    "code_bg": "#F7F8FA",
+    "code_text": "#2D3748",
+    "border": "#E2E8F0",
+    "success": "#48BB78",
+    "warning": "#ED8936",
+    "danger": "#FC8181"
+  },
+  "semantic_roles": {
+    "encoder": "primary",
+    "decoder": "secondary",
+    "attention": "accent_warm",
+    "embedding": "accent",
+    "output": "success",
+    "input": "surface",
+    "intermediate": "surface_alt"
+  },
+  "typography": {
+    "heading_font": "HelveticaNeue",
+    "body_font": "HelveticaNeue",
+    "code_font": "Menlo",
+    "label_font": "HelveticaNeue",
+    "sizes": {
+      "xxl": 48,
+      "xl": 32,
+      "lg": 22,
+      "md": 16,
+      "sm": 12,
+      "xs": 10,
+      "code": 13
+    },
+    "weights": {
+      "title": "Bold",
+      "label": "Medium",
+      "annotation": "Regular"
+    }
+  },
+  "shapes": {
+    "default_corner_radius": 0,
+    "node_corner_radius": 0,
+    "pill_corner_radius": 0,
+    "stroke_width_default": 1,
+    "stroke_width_emphasis": 1.67,
+    "stroke_width_subtle": 0.33,
+    "min_node_width": 120,
+    "min_node_height": 48,
+    "token_cell_width": 80,
+    "token_cell_height": 40,
+    "shadow": false,
+    "shadow_blur": 0,
+    "shadow_offset_x": 0,
+    "shadow_offset_y": 0,
+    "shadow_color": "#00000020"
+  },
+  "connectors": {
+    "default_stroke": "#000000",
+    "default_width": 1,
+    "arrow_style": "FilledArrow",
+    "routing": "orthogonal",
+    "label_font_size": 11
+  },
+  "layout": {
+    "canvas_width_slide": 1920,
+    "canvas_height_slide": 1080,
+    "canvas_width_diagram": 1600,
+    "canvas_height_diagram": 1200,
+    "margin": 80,
+    "node_h_spacing": 60,
+    "node_v_spacing": 40,
+    "title_margin_top": 60,
+    "content_margin_top": 140
+  }
+}

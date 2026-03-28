@@ -17,13 +17,14 @@ describe("buildApplyStyleScript", () => {
     expect(script).toContain("og.activate()");
   });
 
-  it("uses frontmost doc when no path given", () => {
+  it("uses evaluateJavascript with document.portfolio when no path given", () => {
     const script = buildApplyStyleScript({
       preset,
       scope: "current_canvas",
       remapByRole: true,
     });
-    expect(script).toContain("og.documents[0]");
+    expect(script).toContain("evaluateJavascript");
+    expect(script).toContain("document.portfolio");
   });
 
   it("opens specific doc when path given", () => {
@@ -37,7 +38,7 @@ describe("buildApplyStyleScript", () => {
     expect(script).toContain("/path/to/doc.graffle");
   });
 
-  it("includes role keys for remapping", () => {
+  it("includes role data and hexToRGB helper", () => {
     const script = buildApplyStyleScript({
       preset,
       scope: "current_canvas",
@@ -45,16 +46,8 @@ describe("buildApplyStyleScript", () => {
     });
     expect(script).toContain("encoder");
     expect(script).toContain("decoder");
-    expect(script).toContain("ROLE_KEYS");
-  });
-
-  it("includes hex2color helper", () => {
-    const script = buildApplyStyleScript({
-      preset,
-      scope: "current_canvas",
-      remapByRole: true,
-    });
-    expect(script).toContain("function hex2color");
+    expect(script).toContain("data.roles");
+    expect(script).toContain("function hexToRGB");
   });
 
   it("iterates all canvases when scope is all_canvases", () => {
