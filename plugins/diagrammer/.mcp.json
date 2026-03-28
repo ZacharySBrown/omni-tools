@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "diagrammer": {
+      "command": "node",
+      "args": ["${DIAGRAMMER_MCP_PATH}/dist/index.js"],
+      "env": {}
+    }
+  }
+}
