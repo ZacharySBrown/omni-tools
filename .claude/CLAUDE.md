@@ -2,6 +2,65 @@
 
 MCP server enabling Claude Code to create styled technical diagrams and presentation slides in OmniGraffle on macOS, styled after Jay Alammar's Illustrated Transformer aesthetic.
 
+## Installation & Setup
+
+### Prerequisites
+
+- **macOS** (OmniGraffle is macOS-only)
+- **OmniGraffle Pro** (required for automation/scripting)
+- **Node.js 20+**
+- **System Settings → Privacy & Security → Automation**: allow Terminal to control OmniGraffle
+
+### Install from source
+
+```bash
+git clone git@github.com:ZacharySBrown/omni-tools.git
+cd omni-tools
+npm install
+npm run build
+```
+
+### Register as a global MCP server
+
+This makes the diagrammer tools available in **every Claude Code session**, regardless of which repo you're in:
+
+```bash
+claude mcp add --transport stdio --scope user diagrammer \
+  -- node /path/to/omni-tools/dist/index.js
+```
+
+Replace `/path/to/omni-tools` with the absolute path to your clone.
+
+### Verify
+
+```bash
+claude mcp list
+```
+
+You should see `diagrammer` listed. Start a new Claude Code session in any repo and the 12 MCP tools will be available.
+
+### What you get
+
+| Component | Scope | What it provides |
+|-----------|-------|-----------------|
+| **MCP tools** (12) | Global — available in any repo | `create_diagram`, `review_diagram`, `export_diagram`, `extract_diagram_spec`, `fetch_xkcd`, etc. |
+| **Skills** (`/review`, `/design`, etc.) | Project-local — only in omni-tools | Structured workflows for development on the diagrammer itself |
+| **Agents** (architect, engineer, etc.) | Project-local — only in omni-tools | Role personas for development on the diagrammer itself |
+| **Style presets** | Bundled with MCP server | `illustrated-technical`, `clean-academic`, `xkcd` |
+
+When working in a different repo, you use the MCP tools directly — ask Claude to create diagrams, review them, export to PNG, etc. The skills and agents are for developing on the diagrammer itself.
+
+### After updating omni-tools
+
+If you pull new changes, rebuild before your next Claude session:
+
+```bash
+cd /path/to/omni-tools
+npm run build
+```
+
+The MCP server loads the compiled JS from `dist/`, so a rebuild picks up any new tools or fixes.
+
 ## Architecture: 5-Layer Forward-Only Model
 
 Code flows forward only: `Types → Styles → Bridge → Tools → Server`
