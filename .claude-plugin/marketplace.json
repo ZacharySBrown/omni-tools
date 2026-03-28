@@ -6,7 +6,10 @@
   "plugins": [
     {
       "name": "diagrammer",
-      "source": "./",
+      "source": {
+        "source": "github",
+        "repo": "ZacharySBrown/omni-tools"
+      },
       "description": "Create styled technical diagrams and presentations in OmniGraffle"
     }
   ]
