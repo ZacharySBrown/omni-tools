@@ -1,5 +1,6 @@
 import { CreateDiagramInputSchema } from "../types/diagram.js";
 import { loadPreset } from "../styles/loader.js";
+import { applyXkcdTransform } from "../styles/xkcd-transform.js";
 import { buildDiagramScript } from "../bridge/diagram.js";
 import { buildExportScript } from "../bridge/export.js";
 import { runOmniJSFile } from "../bridge/execute.js";
@@ -13,7 +14,10 @@ export const createDiagramTool = {
 
   async execute(input: unknown) {
     const parsed = CreateDiagramInputSchema.parse(input);
-    const preset = loadPreset(parsed.style_preset);
+    let preset = loadPreset(parsed.style_preset);
+    if (parsed.xkcd_mode) {
+      preset = applyXkcdTransform(preset);
+    }
 
     const script = buildDiagramScript({
       title: parsed.title,

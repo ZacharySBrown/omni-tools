@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "name": "xkcd",
+    "description": "xkcd-style hand-drawn diagrams — wobbly lines, comic fonts, monochrome palette",
+    "version": "1.0.0"
+  },
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "surface_alt": "#F5F5F5",
+    "primary": "#000000",
+    "secondary": "#000000",
+    "accent": "#000000",
+    "accent_warm": "#000000",
+    "text_primary": "#000000",
+    "text_secondary": "#333333",
+    "text_on_primary": "#FFFFFF",
+    "text_on_secondary": "#FFFFFF",
+    "connector": "#000000",
+    "connector_highlight": "#000000",
+    "code_bg": "#F5F5F5",
+    "code_text": "#000000",
+    "border": "#000000",
+    "success": "#000000",
+    "warning": "#000000",
+    "danger": "#000000"
+  },
+  "semantic_roles": {
+    "encoder": "surface",
+    "decoder": "surface",
+    "attention": "surface",
+    "embedding": "surface",
+    "output": "surface",
+    "input": "surface",
+    "intermediate": "surface"
+  },
+  "typography": {
+    "heading_font": "Humor Sans",
+    "body_font": "Humor Sans",
+    "code_font": "Humor Sans",
+    "label_font": "Humor Sans",
+    "sizes": {
+      "xxl": 48,
+      "xl": 32,
+      "lg": 22,
+      "md": 18,
+      "sm": 13,
+      "xs": 11,
+      "code": 14
+    },
+    "weights": {
+      "title": "Bold",
+      "label": "Regular",
+      "annotation": "Regular"
+    }
+  },
+  "shapes": {
+    "default_corner_radius": 2,
+    "node_corner_radius": 2,
+    "pill_corner_radius": 12,
+    "stroke_width_default": 2.5,
+    "stroke_width_emphasis": 3.5,
+    "stroke_width_subtle": 1.5,
+    "min_node_width": 120,
+    "min_node_height": 48,
+    "token_cell_width": 80,
+    "token_cell_height": 40,
+    "shadow": false,
+    "shadow_blur": 0,
+    "shadow_offset_x": 0,
+    "shadow_offset_y": 0,
+    "shadow_color": "#00000000"
+  },
+  "connectors": {
+    "default_stroke": "#000000",
+    "default_width": 2.5,
+    "arrow_style": "FilledArrow",
+    "routing": "curved",
+    "label_font_size": 13
+  },
+  "layout": {
+    "canvas_width_slide": 1920,
+    "canvas_height_slide": 1080,
+    "canvas_width_diagram": 1600,
+    "canvas_height_diagram": 1200,
+    "margin": 80,
+    "node_h_spacing": 60,
+    "node_v_spacing": 40,
+    "title_margin_top": 60,
+    "content_margin_top": 140
+  },
+  "hand_drawn": {
+    "enabled": true,
+    "stroke_width_multiplier": 1.0,
+    "corner_radius_override": 2,
+    "connector_routing_override": "curved",
+    "stroke_color_override": "#000000",
+    "wobble_amplitude": 3.0,
+    "wobble_frequency": 0.15
+  }
+}

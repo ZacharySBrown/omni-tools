@@ -76,6 +76,7 @@ export const CreateDiagramInputSchema = z.object({
   layout: LayoutType.default("auto_hierarchical"),
   canvas_type: CanvasType.default("diagram"),
   style_preset: z.string().default("illustrated-technical"),
+  xkcd_mode: z.boolean().default(false),
   output_path: z.string().optional(),
   output_format: ExportFormat.optional(),
 });
