@@ -1,0 +1,20 @@
+{
+  "id": "diagrammer-marketplace",
+  "name": "Diagrammer Marketplace",
+  "description": "OmniGraffle diagram tools for Claude Code",
+  "owner": {
+    "name": "Zak Brown"
+  },
+  "plugins": [
+    {
+      "id": "diagrammer",
+      "name": "diagrammer",
+      "description": "Create styled technical diagrams and presentations in OmniGraffle",
+      "version": "0.2.0",
+      "source": {
+        "type": "local",
+        "path": "."
+      }
+    }
+  ]
+}
