@@ -18,6 +18,8 @@ import { reviewDiagramTool } from "./review-diagram.js";
 import { createSlideTool, CreateSlideInputSchema } from "./create-slide.js";
 import { createSlideDeckTool, CreateSlideDeckInputSchema } from "./create-slide-deck.js";
 import { extractDiagramSpecTool, ExtractDiagramSpecInputSchema } from "./extract-diagram-spec.js";
+import { fetchXkcdTool } from "./fetch-xkcd.js";
+import { FetchXkcdInputSchema } from "../types/xkcd.js";
 
 export function registerAllTools(server: McpServer): void {
   server.tool(
@@ -88,5 +90,12 @@ export function registerAllTools(server: McpServer): void {
     extractDiagramSpecTool.description,
     ExtractDiagramSpecInputSchema.shape,
     async (params) => extractDiagramSpecTool.execute(params as unknown as Record<string, unknown>),
+  );
+
+  server.tool(
+    fetchXkcdTool.name,
+    fetchXkcdTool.description,
+    FetchXkcdInputSchema.shape,
+    async (params) => fetchXkcdTool.execute(params),
   );
 }

@@ -103,6 +103,17 @@ export const LayoutSchema = z.object({
   content_margin_top: z.number(),
 });
 
+export const HandDrawnSchema = z.object({
+  enabled: z.boolean(),
+  stroke_width_multiplier: z.number(),
+  corner_radius_override: z.number(),
+  connector_routing_override: z.enum(["orthogonal", "curved", "direct"]),
+  stroke_color_override: z.string(),
+  wobble_amplitude: z.number(),
+  wobble_frequency: z.number(),
+  wobble_seed: z.number().optional(),
+});
+
 export const StyleTokensSchema = z.object({
   meta: StyleMetaSchema,
   colors: StyleColorsSchema,
@@ -111,6 +122,7 @@ export const StyleTokensSchema = z.object({
   shapes: ShapesSchema,
   connectors: ConnectorsSchema,
   layout: LayoutSchema,
+  hand_drawn: HandDrawnSchema.optional(),
 });
 
 export type StyleTokens = z.infer<typeof StyleTokensSchema>;
